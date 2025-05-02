@@ -1,11 +1,13 @@
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
+  
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  
 }
 
 model User {
@@ -21,6 +23,7 @@ model User {
 
   @@map("users")
 }
+
 
 model tasks {
   id                            Int       @id @default(autoincrement())

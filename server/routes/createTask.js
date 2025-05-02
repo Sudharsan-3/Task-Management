@@ -1,25 +1,25 @@
-import { Router } from "express";
-import db from "../db/Database.js"
+import { PrismaClient } from "../generated/prisma/client.js";
 
-const router = Router()
+const prisma  = new PrismaClient()
 
-router.post("/create", async (req, res) => {
+
+export const createTask = async (req, res) => {
     const { user_id, creator_id, task_name, task_description, priority } = req.body;
-    if(user_id && creator_id && task_name && task_description && priority){
-        await db.query("INSERT INTO tasks(user_id,creator_id,task_name,task_description,priority) VALUES($1,$2,$3,$4,$5)", 
-        [user_id, 
-            creator_id,
-             task_name,
-              task_description, 
-              priority]);
-              res.send("task created successfully")
+    try{
+        const response = prisma.tasks.create({
+    data:{
+        user_id, creator_id, task_name, task_description, priority
     }
-    else{
-        res.send(`You have to enter all thevalues user_id ${user_id}, creator_id : ${creator_id}, task_name : ${task_name}, task_desciption : ${task_description}, priority : ${priority}  `)
+   })
+   res.send(response)
+
+    }catch(error){
+        console.log(error)
     }
 
-})
+   
+
+};
 
 
-export default router;
 
