@@ -37,21 +37,33 @@ export default function RegisterPage() {
     
     try {
       // Replace with your actual API call
-      const response = await api.post("/api/login", {
+      const response = await api.post("/api/register", {
         name,email,password,role
         });
 
+        
+        
+    console.log(response.data.user)
       if (!response.data) {
         throw new Error('Registration failed');
       }
-
-      // Handle successful registration
+      
+      console.log(response.data.user.role)
+      if(response.data.user.role === "admin"){
+// Handle successful registration
       reset();
       alert('Registration successful!');
-      navigate("/login")
+      navigate("/adminpage")
+        }else if(response.data.user.role === "user"){
+          reset();
+          alert('Registration successful!');
+          navigate("/userpage")
+        }
+     
+      
     } catch (error) {
-      console.log(error)
-      setRegisterError(error instanceof Error ? `email is already registered ${error.message}` : 'Registration failed');
+      
+      setRegisterError(error instanceof Error ? `${error.message} ` : 'Registration failed');
     } finally {
       setIsSubmitting(false);
     }

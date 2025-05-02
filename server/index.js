@@ -1,14 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { loginController, profileController} from "./routes/login.js";
+import {register} from "./routes/register.js"
 
 import dotenv from "dotenv"
-import Register from "./routes/register.js"
-import CreateTask from "./routes/createTask.js"
+import {getUsers} from "./routes/getUsers.js"
+import {createTask} from "./routes/createTask.js"
 import { taskController } from "./routes/GetTasks.js";
 import cors from "cors"
 import jwt from "jsonwebtoken";
-
+    
 
 dotenv.config()
 
@@ -38,20 +39,29 @@ const verifyToken = (req,res,next)=>{
 //login
 app.use("/api/login",loginController)
 
-app.use("api/profile", profileController)
 //register new user
 
-app.use("/api",Register)
+app.use("/api/register",register)
+
+//Uers
+
+app.use("/api/profile", profileController)
+
+//get all users 
+
+app.use("/api/allUsers", getUsers)
+
 
 //task creation
 
-app.use(CreateTask)
+app.use( "/api/createTask", createTask)
+
 
 //Read task
 
 app.use("api/task",taskController);
 
-
+//edit tasks
 
 app.patch("/edit",(req,res)=>{
 

@@ -42,9 +42,12 @@ const Login = () => {
       } else if (role === "user") {
         navigate("/userPage");
       } else {
+        
         setError("Unknown role. Please contact support.");
       }
       }else{
+        console.log(response.data)
+
         console.log("Login unsuccessful:", "Email:", email, "Password:", password);
       }
 
