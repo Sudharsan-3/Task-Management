@@ -2191,6 +2191,9 @@ export namespace Prisma {
     status: string | null
     created_at: Date | null
     updated_at: Date | null
+    user_name: string | null
+    creator_name: string | null
+    eta: Date | null
   }
 
   export type TasksMaxAggregateOutputType = {
@@ -2203,6 +2206,9 @@ export namespace Prisma {
     status: string | null
     created_at: Date | null
     updated_at: Date | null
+    user_name: string | null
+    creator_name: string | null
+    eta: Date | null
   }
 
   export type TasksCountAggregateOutputType = {
@@ -2216,6 +2222,9 @@ export namespace Prisma {
     status: number
     created_at: number
     updated_at: number
+    user_name: number
+    creator_name: number
+    eta: number
     _all: number
   }
 
@@ -2242,6 +2251,9 @@ export namespace Prisma {
     status?: true
     created_at?: true
     updated_at?: true
+    user_name?: true
+    creator_name?: true
+    eta?: true
   }
 
   export type TasksMaxAggregateInputType = {
@@ -2254,6 +2266,9 @@ export namespace Prisma {
     status?: true
     created_at?: true
     updated_at?: true
+    user_name?: true
+    creator_name?: true
+    eta?: true
   }
 
   export type TasksCountAggregateInputType = {
@@ -2267,6 +2282,9 @@ export namespace Prisma {
     status?: true
     created_at?: true
     updated_at?: true
+    user_name?: true
+    creator_name?: true
+    eta?: true
     _all?: true
   }
 
@@ -2367,6 +2385,9 @@ export namespace Prisma {
     status: string
     created_at: Date | null
     updated_at: Date | null
+    user_name: string | null
+    creator_name: string | null
+    eta: Date | null
     _count: TasksCountAggregateOutputType | null
     _avg: TasksAvgAggregateOutputType | null
     _sum: TasksSumAggregateOutputType | null
@@ -2399,6 +2420,9 @@ export namespace Prisma {
     status?: boolean
     created_at?: boolean
     updated_at?: boolean
+    user_name?: boolean
+    creator_name?: boolean
+    eta?: boolean
     users_tasks_creator_idTousers?: boolean | UserDefaultArgs<ExtArgs>
     users_tasks_user_idTousers?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tasks"]>
@@ -2414,6 +2438,9 @@ export namespace Prisma {
     status?: boolean
     created_at?: boolean
     updated_at?: boolean
+    user_name?: boolean
+    creator_name?: boolean
+    eta?: boolean
     users_tasks_creator_idTousers?: boolean | UserDefaultArgs<ExtArgs>
     users_tasks_user_idTousers?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tasks"]>
@@ -2429,6 +2456,9 @@ export namespace Prisma {
     status?: boolean
     created_at?: boolean
     updated_at?: boolean
+    user_name?: boolean
+    creator_name?: boolean
+    eta?: boolean
     users_tasks_creator_idTousers?: boolean | UserDefaultArgs<ExtArgs>
     users_tasks_user_idTousers?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tasks"]>
@@ -2444,9 +2474,12 @@ export namespace Prisma {
     status?: boolean
     created_at?: boolean
     updated_at?: boolean
+    user_name?: boolean
+    creator_name?: boolean
+    eta?: boolean
   }
 
-  export type tasksOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "creator_id" | "task_name" | "task_description" | "user_comments" | "priority" | "status" | "created_at" | "updated_at", ExtArgs["result"]["tasks"]>
+  export type tasksOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "user_id" | "creator_id" | "task_name" | "task_description" | "user_comments" | "priority" | "status" | "created_at" | "updated_at" | "user_name" | "creator_name" | "eta", ExtArgs["result"]["tasks"]>
   export type tasksInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users_tasks_creator_idTousers?: boolean | UserDefaultArgs<ExtArgs>
     users_tasks_user_idTousers?: boolean | UserDefaultArgs<ExtArgs>
@@ -2477,6 +2510,9 @@ export namespace Prisma {
       status: string
       created_at: Date | null
       updated_at: Date | null
+      user_name: string | null
+      creator_name: string | null
+      eta: Date | null
     }, ExtArgs["result"]["tasks"]>
     composites: {}
   }
@@ -2912,6 +2948,9 @@ export namespace Prisma {
     readonly status: FieldRef<"tasks", 'String'>
     readonly created_at: FieldRef<"tasks", 'DateTime'>
     readonly updated_at: FieldRef<"tasks", 'DateTime'>
+    readonly user_name: FieldRef<"tasks", 'String'>
+    readonly creator_name: FieldRef<"tasks", 'String'>
+    readonly eta: FieldRef<"tasks", 'DateTime'>
   }
     
 
@@ -3363,7 +3402,10 @@ export namespace Prisma {
     priority: 'priority',
     status: 'status',
     created_at: 'created_at',
-    updated_at: 'updated_at'
+    updated_at: 'updated_at',
+    user_name: 'user_name',
+    creator_name: 'creator_name',
+    eta: 'eta'
   };
 
   export type TasksScalarFieldEnum = (typeof TasksScalarFieldEnum)[keyof typeof TasksScalarFieldEnum]
@@ -3572,6 +3614,9 @@ export namespace Prisma {
     status?: StringFilter<"tasks"> | string
     created_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
+    user_name?: StringNullableFilter<"tasks"> | string | null
+    creator_name?: StringNullableFilter<"tasks"> | string | null
+    eta?: DateTimeNullableFilter<"tasks"> | Date | string | null
     users_tasks_creator_idTousers?: XOR<UserScalarRelationFilter, UserWhereInput>
     users_tasks_user_idTousers?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -3587,6 +3632,9 @@ export namespace Prisma {
     status?: SortOrder
     created_at?: SortOrderInput | SortOrder
     updated_at?: SortOrderInput | SortOrder
+    user_name?: SortOrderInput | SortOrder
+    creator_name?: SortOrderInput | SortOrder
+    eta?: SortOrderInput | SortOrder
     users_tasks_creator_idTousers?: UserOrderByWithRelationInput
     users_tasks_user_idTousers?: UserOrderByWithRelationInput
   }
@@ -3605,6 +3653,9 @@ export namespace Prisma {
     status?: StringFilter<"tasks"> | string
     created_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
+    user_name?: StringNullableFilter<"tasks"> | string | null
+    creator_name?: StringNullableFilter<"tasks"> | string | null
+    eta?: DateTimeNullableFilter<"tasks"> | Date | string | null
     users_tasks_creator_idTousers?: XOR<UserScalarRelationFilter, UserWhereInput>
     users_tasks_user_idTousers?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
@@ -3620,6 +3671,9 @@ export namespace Prisma {
     status?: SortOrder
     created_at?: SortOrderInput | SortOrder
     updated_at?: SortOrderInput | SortOrder
+    user_name?: SortOrderInput | SortOrder
+    creator_name?: SortOrderInput | SortOrder
+    eta?: SortOrderInput | SortOrder
     _count?: tasksCountOrderByAggregateInput
     _avg?: tasksAvgOrderByAggregateInput
     _max?: tasksMaxOrderByAggregateInput
@@ -3641,6 +3695,9 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"tasks"> | string
     created_at?: DateTimeNullableWithAggregatesFilter<"tasks"> | Date | string | null
     updated_at?: DateTimeNullableWithAggregatesFilter<"tasks"> | Date | string | null
+    user_name?: StringNullableWithAggregatesFilter<"tasks"> | string | null
+    creator_name?: StringNullableWithAggregatesFilter<"tasks"> | string | null
+    eta?: DateTimeNullableWithAggregatesFilter<"tasks"> | Date | string | null
   }
 
   export type UserCreateInput = {
@@ -3726,6 +3783,9 @@ export namespace Prisma {
     status?: string
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    user_name?: string | null
+    creator_name?: string | null
+    eta?: Date | string | null
     users_tasks_creator_idTousers: UserCreateNestedOneWithoutTasks_tasks_creator_idTousersInput
     users_tasks_user_idTousers: UserCreateNestedOneWithoutTasks_tasks_user_idTousersInput
   }
@@ -3741,6 +3801,9 @@ export namespace Prisma {
     status?: string
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    user_name?: string | null
+    creator_name?: string | null
+    eta?: Date | string | null
   }
 
   export type tasksUpdateInput = {
@@ -3751,6 +3814,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    creator_name?: NullableStringFieldUpdateOperationsInput | string | null
+    eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users_tasks_creator_idTousers?: UserUpdateOneRequiredWithoutTasks_tasks_creator_idTousersNestedInput
     users_tasks_user_idTousers?: UserUpdateOneRequiredWithoutTasks_tasks_user_idTousersNestedInput
   }
@@ -3766,6 +3832,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    creator_name?: NullableStringFieldUpdateOperationsInput | string | null
+    eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type tasksCreateManyInput = {
@@ -3779,6 +3848,9 @@ export namespace Prisma {
     status?: string
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    user_name?: string | null
+    creator_name?: string | null
+    eta?: Date | string | null
   }
 
   export type tasksUpdateManyMutationInput = {
@@ -3789,6 +3861,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    creator_name?: NullableStringFieldUpdateOperationsInput | string | null
+    eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type tasksUncheckedUpdateManyInput = {
@@ -3802,6 +3877,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    creator_name?: NullableStringFieldUpdateOperationsInput | string | null
+    eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -3996,6 +4074,9 @@ export namespace Prisma {
     status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    user_name?: SortOrder
+    creator_name?: SortOrder
+    eta?: SortOrder
   }
 
   export type tasksAvgOrderByAggregateInput = {
@@ -4014,6 +4095,9 @@ export namespace Prisma {
     status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    user_name?: SortOrder
+    creator_name?: SortOrder
+    eta?: SortOrder
   }
 
   export type tasksMinOrderByAggregateInput = {
@@ -4026,6 +4110,9 @@ export namespace Prisma {
     status?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
+    user_name?: SortOrder
+    creator_name?: SortOrder
+    eta?: SortOrder
   }
 
   export type tasksSumOrderByAggregateInput = {
@@ -4377,6 +4464,9 @@ export namespace Prisma {
     status?: string
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    user_name?: string | null
+    creator_name?: string | null
+    eta?: Date | string | null
     users_tasks_user_idTousers: UserCreateNestedOneWithoutTasks_tasks_user_idTousersInput
   }
 
@@ -4390,6 +4480,9 @@ export namespace Prisma {
     status?: string
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    user_name?: string | null
+    creator_name?: string | null
+    eta?: Date | string | null
   }
 
   export type tasksCreateOrConnectWithoutUsers_tasks_creator_idTousersInput = {
@@ -4410,6 +4503,9 @@ export namespace Prisma {
     status?: string
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    user_name?: string | null
+    creator_name?: string | null
+    eta?: Date | string | null
     users_tasks_creator_idTousers: UserCreateNestedOneWithoutTasks_tasks_creator_idTousersInput
   }
 
@@ -4423,6 +4519,9 @@ export namespace Prisma {
     status?: string
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    user_name?: string | null
+    creator_name?: string | null
+    eta?: Date | string | null
   }
 
   export type tasksCreateOrConnectWithoutUsers_tasks_user_idTousersInput = {
@@ -4465,6 +4564,9 @@ export namespace Prisma {
     status?: StringFilter<"tasks"> | string
     created_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
     updated_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
+    user_name?: StringNullableFilter<"tasks"> | string | null
+    creator_name?: StringNullableFilter<"tasks"> | string | null
+    eta?: DateTimeNullableFilter<"tasks"> | Date | string | null
   }
 
   export type tasksUpsertWithWhereUniqueWithoutUsers_tasks_user_idTousersInput = {
@@ -4609,6 +4711,9 @@ export namespace Prisma {
     status?: string
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    user_name?: string | null
+    creator_name?: string | null
+    eta?: Date | string | null
   }
 
   export type tasksCreateManyUsers_tasks_user_idTousersInput = {
@@ -4621,6 +4726,9 @@ export namespace Prisma {
     status?: string
     created_at?: Date | string | null
     updated_at?: Date | string | null
+    user_name?: string | null
+    creator_name?: string | null
+    eta?: Date | string | null
   }
 
   export type tasksUpdateWithoutUsers_tasks_creator_idTousersInput = {
@@ -4631,6 +4739,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    creator_name?: NullableStringFieldUpdateOperationsInput | string | null
+    eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users_tasks_user_idTousers?: UserUpdateOneRequiredWithoutTasks_tasks_user_idTousersNestedInput
   }
 
@@ -4644,6 +4755,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    creator_name?: NullableStringFieldUpdateOperationsInput | string | null
+    eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type tasksUncheckedUpdateManyWithoutUsers_tasks_creator_idTousersInput = {
@@ -4656,6 +4770,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    creator_name?: NullableStringFieldUpdateOperationsInput | string | null
+    eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type tasksUpdateWithoutUsers_tasks_user_idTousersInput = {
@@ -4666,6 +4783,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    creator_name?: NullableStringFieldUpdateOperationsInput | string | null
+    eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     users_tasks_creator_idTousers?: UserUpdateOneRequiredWithoutTasks_tasks_creator_idTousersNestedInput
   }
 
@@ -4679,6 +4799,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    creator_name?: NullableStringFieldUpdateOperationsInput | string | null
+    eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type tasksUncheckedUpdateManyWithoutUsers_tasks_user_idTousersInput = {
@@ -4691,6 +4814,9 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user_name?: NullableStringFieldUpdateOperationsInput | string | null
+    creator_name?: NullableStringFieldUpdateOperationsInput | string | null
+    eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

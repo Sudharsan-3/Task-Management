@@ -23,16 +23,38 @@ model User {
 }
 
 model tasks {
-  id                            Int       @id @default(autoincrement())
-  user_id                       Int
-  creator_id                    Int
-  task_name                     String    @db.VarChar(100)
-  task_description              String?
-  user_comments                 Json?
-  priority                      String    @default("medium") @db.VarChar(10)
-  status                        String    @default("draft") @db.VarChar(20)
-  created_at                    DateTime? @default(now()) @db.Timestamptz(6)
-  updated_at                    DateTime? @default(now()) @db.Timestamptz(6)
-  users_tasks_creator_idTousers User      @relation("tasks_creator_idTousers", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_creator")
-  users_tasks_user_idTousers    User      @relation("tasks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+  id               Int       @id @default(autoincrement())
+  user_id          Int
+  creator_id       Int
+  task_name        String    @db.VarChar(100)
+  task_description String?
+  user_comments    Json?
+  priority         String    @default("medium") @db.VarChar(10)
+  status           String    @default("draft") @db.VarChar(20)
+  created_at       DateTime? @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime? @default(now()) @db.Timestamptz(6)
+  user_name        String?   @db.VarChar(100)
+
+  // ✅ New fields
+  creator_name String?   @db.VarChar(100) // name of the creator
+  eta          DateTime? @db.Timestamptz(6) // estimated time of arrival or completion
+
+  users_tasks_creator_idTousers User @relation("tasks_creator_idTousers", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_creator")
+  users_tasks_user_idTousers    User @relation("tasks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
 }
+
+// model tasks {
+//   id                            Int       @id @default(autoincrement())
+//   user_id                       Int
+//   creator_id                    Int
+//   task_name                     String    @db.VarChar(100)
+//   task_description              String?
+//   user_comments                 Json?
+//   priority                      String    @default("medium") @db.VarChar(10)
+//   status                        String    @default("draft") @db.VarChar(20)
+//   created_at                    DateTime? @default(now()) @db.Timestamptz(6)
+//   updated_at                    DateTime? @default(now()) @db.Timestamptz(6)
+//   user_name                     String?   @db.VarChar(100) // New column added here
+//   users_tasks_creator_idTousers User      @relation("tasks_creator_idTousers", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_creator")
+//   users_tasks_user_idTousers    User      @relation("tasks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+// }

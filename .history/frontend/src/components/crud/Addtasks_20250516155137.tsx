@@ -1,0 +1,228 @@
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../../api/axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { AuthContext } from '../Context/AuthContext';
+import { useQuery } from '@tanstack/react-query';
+
+interface User {
+  id: number;
+  name: string;
+}
+
+const CreateTask: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUserId, setSelectedUserId] = useState('');
+  const [taskName, setTaskName] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
+  const [priority, setPriority] = useState('medium');
+  const [status, setStatus] = useState('draft');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+  const {user} = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const creatorId = user?.id
+  const creator_name = user?.name
+
+  console.log(user?.id,creator_name,"from add task")
+
+  const featchData = async()=>{
+    const res = await api.get('/api/allUsers');
+    return res.data;
+  }
+
+  const {data,isLoading,isSuccess,isError} = useQuery({
+    queryKey:['addTasks',user],
+    queryFn:featchData
+  })
+
+    useEffect(() => {
+      if (isLoading) {
+        toast.loading("Fetching tasks...", { toastId: "fetching" });
+      }
+      if (isSuccess) {
+        toast.dismiss("fetching");
+        toast.success("All users Loaded successfully");
+        console.log(<data value="" className="users"></data>, "from status second api")
+        setUsers(data.users)
+      }
+      if (isError) {
+        toast.dismiss("fetching");
+        toast.error("Failed to fetch tasks!");
+      }
+    }, [data, isLoading, isSuccess, isError])
+
+  
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     try {
+  //       const response = await api.get('/api/allUsers');
+  //       setUsers(response.data.users);
+  //       console.log(response.data.users);
+        
+  //     } catch (err) {
+  //       console.error('Failed to fetch users', err);
+  //     }
+  //   };
+
+  //   fetchUsers();
+  // }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedUserId || !creatorId) {
+      setMessage('User or creator not selected');
+      return;
+    }
+
+    const selectedUser = users.find(user => user.id.toString() === selectedUserId);
+    const userName = selectedUser?.name || '';
+
+    const featchData1 = async()=>{
+      const res = await api.post('/api/createTask', {
+        user_id: Number(selectedUserId),
+        user_name: userName,
+        creator_id: Number(creatorId),
+        task_name: taskName,
+        task_description: taskDescription,
+        priority,
+        status,
+        creator_name,
+      }); 
+      return res.data;
+    }
+    const {data,isLoading,isSuccess,isError} = useQuery({
+      queryKey:{}
+    })
+
+    setLoading(true);
+    try {
+      const response = await api.post('/api/createTask', {
+        user_id: Number(selectedUserId),
+        user_name: userName,
+        creator_id: Number(creatorId),
+        task_name: taskName,
+        task_description: taskDescription,
+        priority,
+        status,
+        creator_name,
+      });
+
+      if (!response) throw new Error('Failed to create task');
+      toast.success("Task Created successfully")
+
+      setMessage('✅ Task created successfully!');
+      
+      setTaskName('');
+      setTaskDescription('');
+      setPriority('medium');
+      setStatus('draft');
+      setSelectedUserId('');
+      navigate("/tasks")
+    } catch (err: any) {
+      setMessage(err.message || 'Error occurred');
+      toast.error("Something went wrong")
+      
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto bg-white p-6 rounded-md shadow-md mt-6">
+      <ToastContainer position="top-right" autoClose={3000} />
+      <button
+        onClick={() => navigate(-1)}
+        className="mb-4 px-4 py-2 text-sm rounded-md bg-gray-200 hover:bg-gray-300 transition cursor-pointer"
+      >
+        ← 
+      </button>
+
+      <h2 className="text-2xl font-bold mb-4 text-center">Create Task</h2>
+
+      {message && (
+        <div className="mb-4 text-center text-sm text-green-600">{message}</div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block font-medium text-gray-700 mb-1">Select User</label>
+          <select
+            required
+            value={selectedUserId}
+            onChange={(e) => setSelectedUserId(e.target.value)}
+            className="w-full border rounded-md px-4 py-2"
+          >
+            <option value="">-- Select User --</option>
+            {users.map((user) => (
+              <option key={user.id} value={user.id.toString()}>
+                {user.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className="block font-medium text-gray-700 mb-1">Task Name</label>
+          <input
+            type="text"
+            required
+            value={taskName}
+            onChange={(e) => setTaskName(e.target.value)}
+            className="w-full border rounded-md px-4 py-2"
+          />
+        </div>
+
+        <div>
+          <label className="block font-medium text-gray-700 mb-1">Description</label>
+          <textarea
+            required
+            value={taskDescription}
+            onChange={(e) => setTaskDescription(e.target.value)}
+            className="w-full border rounded-md px-4 py-2"
+          />
+        </div>
+
+        <div className="flex gap-4">
+          <div className="flex-1">
+            <label className="block font-medium text-gray-700 mb-1">Priority</label>
+            <select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+              className="w-full border rounded-md px-4 py-2"
+            >
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+
+          <div className="flex-1">
+            <label className="block font-medium text-gray-700 mb-1">Status</label>
+            <select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="w-full border rounded-md px-4 py-2"
+            >
+              <option value="draft">Draft</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
+        >
+          {loading ? 'Creating...' : 'Create Task'}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default CreateTask;
+

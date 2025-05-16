@@ -1,0 +1,43 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const Profile: React.FC = () => {
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      navigate("/login"); // redirect if not logged in
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
+  return (
+    <div className="max-w-xl mx-auto mt-10 bg-white shadow-lg p-6 rounded-md text-center">
+      <h2 className="text-2xl font-bold mb-4">Profile</h2>
+      {user ? (
+        <>
+          <p className="text-lg"><strong>Username:</strong> {username || "N/A"}</p>
+          <p className="text-lg mb-6"><strong>Email:</strong> {user.email || "N/A"}</p>
+          <button
+            onClick={handleLogout}
+            className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+          >
+            Logout
+          </button>
+        </>
+      ) : (
+        <p>Loading user data...</p>
+      )}
+    </div>
+  );
+};
+
+export default Profile;

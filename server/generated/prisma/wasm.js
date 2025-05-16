@@ -137,7 +137,10 @@ exports.Prisma.TasksScalarFieldEnum = {
   priority: 'priority',
   status: 'status',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  user_name: 'user_name',
+  creator_name: 'creator_name',
+  eta: 'eta'
 };
 
 exports.Prisma.SortOrder = {
