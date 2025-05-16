@@ -1,48 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import api from "../../api/axios";
-import Getallusers from '../adminPage/Getallusers';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Context/AuthContext';
 
 
-// Define the User type based on your backend response structure
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-  // Add other fields if needed
-}
+
+
 
 const Admin: React.FC = () => {
-  const [rData, setRdata] = useState<User[] | null>(null);
+  // 
   const [notification, setNotification] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const {user} = useContext(AuthContext)
+
+ console.log(user,"from Admin")
 
   const clickHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const key = e.currentTarget.value;
     console.log("Button clicked:", key);
 
     if (key === "users") {
+      
       setNotification("Fetching users...");
-
-      try {
-        const response = await api.get<User[]>("/api/allUsers");
-        const users = response.data;
-
-        setRdata(users);
-        setNotification(`Successfully loaded ${users.length} users`);
-        console.log("Users data:", users); // ✅ Correctly logs the latest user data
-      } catch (error) {
-        console.error("Failed to fetch users:", error);
-        setNotification("Error fetching users");
-      }
+      navigate("/getAllusers")
+      
     } else if (key === "tasks") {
       console.log("Tasks button clicked");
+      navigate("/tasks")
     } else if (key === "status") {
+      navigate("/taskStatus")
       console.log("Status button clicked");
+    } else if (key === "addTask") {
+      navigate("/addTasks")
+      console.log("Add Task button clicked");
+      // You can use navigate() or open a modal here
     }
   };
-
-  // Auto-clear notifications after 3 seconds
+  
+  console.log(localStorage.getItem("id"))
+ 
   useEffect(() => {
+   
+  
     if (notification) {
       const timer = setTimeout(() => setNotification(null), 3000);
       return () => clearTimeout(timer);
@@ -63,27 +61,34 @@ const Admin: React.FC = () => {
         <button
           onClick={clickHandler}
           value="users"
-          className="px-8 py-4 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all"
+          className="px-8 py-4 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 transition-all cursor-pointer"
         >
           Users
         </button>
         <button
           onClick={clickHandler}
           value="tasks"
-          className="px-8 py-4 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition-all"
+          className="px-8 py-4 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600 transition-all cursor-pointer"
         >
           Tasks
         </button>
         <button
           onClick={clickHandler}
           value="status"
-          className="px-8 py-4 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600 transition-all"
+          className="px-8 py-4 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600 transition-all cursor-pointer"
         >
           Status
         </button>
+        <button
+          onClick={clickHandler}
+          value="addTask"
+          className="px-8 py-4 bg-purple-500 text-white rounded-lg shadow-md hover:bg-purple-600 transition-all cursor-pointer"
+        >
+          Add Task
+        </button>
       </div>
 
-      <div className="mt-8 w-full">
+      {/* <div className="mt-8 w-full">
         {rData === null ? (
           <p className="text-center text-gray-600">Click a button to load data...</p>
         ) : rData.length > 0 ? (
@@ -91,11 +96,9 @@ const Admin: React.FC = () => {
         ) : (
           <p className="text-center text-red-500">No user data available</p>
         )}
-      </div>
-      
+      </div> */}
     </div>
   );
 };
 
 export default Admin;
-

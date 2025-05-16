@@ -1,12 +1,11 @@
 import React from 'react'
 
-const User = () => {
+const Loaddata = () => {
   return (
     <div>
-        <h1>Welcome user </h1>
       
     </div>
   )
 }
 
-export default User
+export default Loaddata

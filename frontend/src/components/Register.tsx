@@ -49,16 +49,18 @@ export default function RegisterPage() {
       }
       
       console.log(response.data.user.role)
-      if(response.data.user.role === "admin"){
-// Handle successful registration
-      reset();
-      alert('Registration successful!');
-      navigate("/adminpage")
-        }else if(response.data.user.role === "user"){
-          reset();
-          alert('Registration successful!');
-          navigate("/userpage")
-        }
+      navigate("/login")
+      reset()
+//       if(response.data.user.role === "admin"){
+// // Handle successful registration
+//       reset();
+//       alert('Registration successful!');
+//       navigate("/adminpage")
+//         }else if(response.data.user.role === "user"){
+//           reset();
+//           alert('Registration successful!');
+//           navigate("/userpage")
+//         }
      
       
     } catch (error) {

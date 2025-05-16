@@ -1,87 +1,349 @@
-import React from 'react';
-import {Link} from "react-router-dom"
+import React, { useContext, useEffect, useState } from 'react';
+import { FaEye } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import api from '../../api/axios';
+import { AuthContext } from '../Context/AuthContext';
 
 interface User {
   id: number;
   name: string;
   email: string;
   role: string;
+  users:string
 }
 
-interface Props {
-  value: User[];
-}
+const Getallusers: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
-const Getallusers: React.FC<Props> = ({ value }) => {
-  
+  // Set the auth token for Axios globally
+  useEffect(() => {
+    if (typeof user === 'string') {
+      axios.defaults.headers.common['Authorization'] = user;
+    }
+  }, [user]);
 
+  // Handle showing user info in a toast
   const handleShow = (user: User) => {
-    console.log("Showing user:", user);
+    toast.info(
+      `Name: ${user.name}\nEmail: ${user.email}\nRole: ${user.role}`,
+      {
+        position: 'top-right',
+        autoClose: 3000,
+      }
+    );
   };
 
-  const handleEdit = (user: User) => {
-    console.log("Editing user:", user);
-  };
+  // Fetch all users from API
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await api.get<User[]>('/api/allUsers');
+        console.log(response.data.users,"from use effect")
+        if (Array.isArray(response.data.users)) {
+          setUsers(response.data.users);
+          toast.success(`Loaded ${response.data.length} users`, {
+            position: 'top-right',
+            autoClose: 3000,
+          });
+        } else {
+          toast.error('Invalid response from server.', {
+            position: 'top-right',
+            autoClose: 3000,
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+        toast.error('Failed to fetch users', {
+          position: 'top-right',
+          autoClose: 3000,
+        });
+      }
+    };
 
-  const handleDelete = (userId: number) => {
-    console.log("Deleting user with ID:", userId);
-  };
-
-  const handleAddTask = (user: User) => {
-    console.log("Adding task for user:", user);
-  };
+    fetchUsers();
+  }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-5xl bg-white shadow-lg rounded-lg p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-gray-800">All Users</h2>
-          
-        </div>
-        <ul className="divide-y divide-gray-200">
-          {value.map((user) => (
-            <li key={user.id} className="py-4">
-              <div className="flex justify-between items-center flex-wrap gap-2">
-                <div>
-                  <p className="text-lg font-semibold text-gray-800">Name : {user.name}</p>
-                  <p className="text-sm text-gray-600">Email : {user.email}</p>
-                  <p className="text-sm text-gray-500 italic">Role : {user.role}</p>
-                </div>
-                <div className="flex gap-2 flex-wrap">
-                    <link></link>
-                <button
-                    onClick={() => handleAddTask(user)}
-                    className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-md text-sm transition"
-                  >
-                    Add Task
-                  </button>
-                  <button
-                    onClick={() => handleShow(user)}
-                    className="bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-md text-sm transition"
-                  >
-                    Show
-                  </button>
-                  <button
-                    onClick={() => handleEdit(user)}
-                    className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded-md text-sm transition"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(user.id)}
-                    className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm transition"
-                  >
-                    Delete
-                  </button>
-                 
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+    <div className="p-6 max-w-6xl mx-auto">
+      <ToastContainer position="top-right" autoClose={3000} />
+      <div className="flex items-center justify-between mb-4">
+        <button
+          onClick={() => navigate(-1)}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+        >
+          Back
+        </button>
+        <h2 className="text-2xl font-bold text-right">All Users</h2>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full border border-gray-300 text-sm text-left">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border px-4 py-2">S.No</th>
+              <th className="border px-4 py-2">Name</th>
+              <th className="border px-4 py-2">Email</th>
+              <th className="border px-4 py-2">Role</th>
+              <th className="border px-4 py-2 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.length > 0 ? (
+              users.map((user, index) => (
+                <tr key={user.id} className="hover:bg-gray-50">
+                  <td className="border px-4 py-2">{index + 1}</td>
+                  <td className="border px-4 py-2">{user.name}</td>
+                  <td className="border px-4 py-2">{user.email}</td>
+                  <td className="border px-4 py-2 capitalize">{user.role}</td>
+                  <td className="border px-4 py-2 text-center text-lg">
+                    <button
+                      onClick={() => handleShow(user)}
+                      className="text-purple-600 hover:text-purple-800"
+                      title="Show"
+                    >
+                      <FaEye />
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={5} className="text-center text-gray-500 py-4">
+                  No users found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 };
 
 export default Getallusers;
+
+// import React, { useContext, useEffect, useState } from 'react';
+// import { FaEye } from 'react-icons/fa';
+// import { useNavigate } from 'react-router-dom';
+// import api from '../../api/axios';
+// import axios from 'axios';
+// import { AuthContext } from '../Context/AuthContext';
+// import { toast, ToastContainer } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// interface User {
+//   id: number;
+//   name: string;
+//   email: string;
+//   role: string;
+// }
+
+// const Getallusers: React.FC = () => {
+//   const [users, setUsers] = useState<User[]>([]);
+//   const navigate = useNavigate();
+//   const { user } = useContext(AuthContext);
+
+//   // Set the auth token once
+//   useEffect(() => {
+//     if (typeof user === 'string') {
+//       axios.defaults.headers.common['Authorization'] = user;
+//     }
+//   }, [user]);
+
+//   const handleShow = (user: User) => {
+//     toast.info(`Name: ${user.name}\nEmail: ${user.email}\nRole: ${user.role}`, {
+//       position: toast.POSITION.TOP_RIGHT,
+//       autoClose: 3000,
+//     });
+//   };
+
+//   useEffect(() => {
+//     const fetchUsers = async () => {
+//       try {
+//         const response = await api.get<User[]>('/api/allUsers');
+//         if (Array.isArray(response.data)) {
+//           setUsers(response.data);
+//           toast.success(`Loaded ${response.data.length} users`);
+//         } else {
+//           toast.error('Invalid response data');
+//         }
+//       } catch (error) {
+//         console.error('Failed to fetch users:', error);
+//         toast.error('Error fetching users');
+//       }
+//     };
+
+//     fetchUsers(); // only runs once
+//   }, []);
+
+//   return (
+//     <div className="p-6 max-w-6xl mx-auto">
+//       <ToastContainer />
+//       <div className="flex items-center justify-between mb-4">
+//         <button
+//           onClick={() => navigate(-1)}
+//           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+//         >
+//           Back
+//         </button>
+//         <h2 className="text-2xl font-bold text-right">All Users</h2>
+//       </div>
+
+//       <div className="overflow-x-auto">
+//         <table className="min-w-full border border-gray-300 text-sm text-left">
+//           <thead>
+//             <tr className="bg-gray-100">
+//               <th className="border px-4 py-2">S.No</th>
+//               <th className="border px-4 py-2">Name</th>
+//               <th className="border px-4 py-2">Email</th>
+//               <th className="border px-4 py-2">Role</th>
+//               <th className="border px-4 py-2 text-center">Actions</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {users.length > 0 ? (
+//               users.map((user, index) => (
+//                 <tr key={user.id} className="hover:bg-gray-50">
+//                   <td className="border px-4 py-2">{index + 1}</td>
+//                   <td className="border px-4 py-2">{user.name}</td>
+//                   <td className="border px-4 py-2">{user.email}</td>
+//                   <td className="border px-4 py-2 capitalize">{user.role}</td>
+//                   <td className="border px-4 py-2 text-center text-lg">
+//                     <button
+//                       onClick={() => handleShow(user)}
+//                       className="text-purple-600 hover:text-purple-800"
+//                       title="Show"
+//                     >
+//                       <FaEye />
+//                     </button>
+//                   </td>
+//                 </tr>
+//               ))
+//             ) : (
+//               <tr>
+//                 <td colSpan={5} className="text-center text-gray-500 py-4">
+//                   No users found.
+//                 </td>
+//               </tr>
+//             )}
+//           </tbody>
+//         </table>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Getallusers;
+
+// import React, { useContext, useEffect, useState } from 'react';
+// import { FaEye } from 'react-icons/fa';
+// import { useNavigate } from 'react-router-dom';
+// import api from '../../api/axios';
+// import axios from 'axios';
+// import { AuthContext } from '../Context/AuthContext';
+
+// interface User {
+//   id: number;
+//   name: string;
+//   email: string;
+//   role: string;
+// }
+
+// const Getallusers: React.FC = () => {
+//   const [users, setUsers] = useState<User[]>([]);
+//   const [notification, setNotification] = useState<string | null>(null);
+//   const navigate = useNavigate();
+//   const { user } = useContext(AuthContext);
+
+//   if (typeof user === 'string') {
+//     axios.defaults.headers.common["Authorization"] = user;
+//   }
+
+//   const handleShow = (user: User) => {
+//     alert(`User Details:\n\nName: ${user.name}\nEmail: ${user.email}\nRole: ${user.role}`);
+//   };
+
+//   useEffect(() => {
+//     const fetchUsers = async () => {
+      
+//       try {
+//         const response = await api.get<User[]>('/api/allUsers');
+//         setUsers(response.data);
+//         setNotification(`Successfully loaded ${response.data.length} users`);
+//       } catch (error) {
+//         console.error('Failed to fetch users:', error);
+//         setNotification('Error fetching users');
+
+//       }
+//     };
+//     fetchUsers();
+//   }, []);
+
+//   return (
+//     <div className="p-6 max-w-6xl mx-auto">
+//       <div className="flex items-center justify-between mb-4">
+//         <button
+//           onClick={() => navigate(-1)}
+//           className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+//         >
+//           Back
+//         </button>
+//         <h2 className="text-2xl font-bold text-right">All Users</h2>
+//       </div>
+
+//       {notification && (
+//         <div className="mb-4 p-3 bg-blue-100 text-blue-800 rounded shadow text-center">
+//           {notification}
+//         </div>
+//       )}
+
+//       <div className="overflow-x-auto">
+//         <table className="min-w-full border border-gray-300 text-sm text-left">
+//           <thead>
+//             <tr className="bg-gray-100">
+//               <th className="border px-4 py-2">S.No</th>
+//               <th className="border px-4 py-2">Name</th>
+//               <th className="border px-4 py-2">Email</th>
+//               <th className="border px-4 py-2">Role</th>
+//               <th className="border px-4 py-2 text-center">Actions</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {users.length > 0 ? (
+//               users.map((user, index) => (
+//                 <tr key={user.id} className="hover:bg-gray-50">
+//                   <td className="border px-4 py-2">{index + 1}</td>
+//                   <td className="border px-4 py-2">{user.name}</td>
+//                   <td className="border px-4 py-2">{user.email}</td>
+//                   <td className="border px-4 py-2 capitalize">{user.role}</td>
+//                   <td className="border px-4 py-2 text-center text-lg">
+//                     <button
+//                       onClick={() => handleShow(user)}
+//                       className="text-purple-600 hover:text-purple-800"
+//                       title="Show"
+//                     >
+//                       <FaEye />
+//                     </button>
+//                   </td>
+//                 </tr>
+//               ))
+//             ) : (
+//               <tr>
+//                 <td colSpan={5} className="text-center text-gray-500 py-4">
+//                   No users found.
+//                 </td>
+//               </tr>
+//             )}
+//           </tbody>
+//         </table>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Getallusers;
