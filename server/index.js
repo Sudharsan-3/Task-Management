@@ -96,5 +96,6 @@ app.use("/api/UserCompleted",verifyToken, UserCompleted)
 
 
 app.listen(port, () => {
-    console.log(`Your server is connected on : http://localhost:${port}`)
+    console.log(console.log(`✅ Server is running on port: ${port}`))
+  
 })
