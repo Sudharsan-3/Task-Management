@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 // Getting all the users 
 // import { PrismaClient } from "../generated/prisma/client.js";
 
