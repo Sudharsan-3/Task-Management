@@ -174,7 +174,7 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  user: 'user',
+  User: 'User',
   tasks: 'tasks'
 };
 

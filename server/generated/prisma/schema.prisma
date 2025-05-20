@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model User {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(100)
   email     String   @unique @db.VarChar(255)
@@ -19,6 +19,8 @@ model user {
 
   tasks_created  tasks[] @relation("tasks_creator_idTousers")
   tasks_assigned tasks[] @relation("tasks_user_idTousers")
+
+  @@map("users")
 }
 
 model tasks {
@@ -36,8 +38,8 @@ model tasks {
   creator_name     String?   @db.VarChar(100)
   eta              DateTime? @db.Timestamptz(6)
 
-  creator  user @relation("tasks_creator_idTousers", fields: [creator_id], references: [id])
-  assignee user @relation("tasks_user_idTousers", fields: [user_id], references: [id])
+  creator  User @relation("tasks_creator_idTousers", fields: [creator_id], references: [id])
+  assignee User @relation("tasks_user_idTousers", fields: [user_id], references: [id])
 }
 
 // generator client {
