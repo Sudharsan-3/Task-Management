@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model user {
   id        Int      @id(map: "users_pkey") @default(autoincrement())
   name      String   @db.VarChar(100)
   email     String   @unique(map: "users_email_key") @db.VarChar(255)
@@ -38,8 +38,8 @@ model tasks {
   creator_name     String?   @db.VarChar(100)
   eta              DateTime? @db.Timestamptz(6)
 
-  users_tasks_creator_idTousers User @relation("tasks_creator_idTousers", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_creator")
-  users_tasks_user_idTousers    User @relation("tasks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+  users_tasks_creator_idTousers user @relation("tasks_creator_idTousers", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_creator")
+  users_tasks_user_idTousers    user @relation("tasks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
 
   @@map("tasks")
 }
