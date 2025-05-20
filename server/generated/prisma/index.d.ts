@@ -1182,8 +1182,8 @@ export namespace Prisma {
     email: string
     password: string
     role: string
-    createdAt: Date | null
-    updatedAt: Date | null
+    createdAt: Date
+    updatedAt: Date
     _count: UserCountAggregateOutputType | null
     _avg: UserAvgAggregateOutputType | null
     _sum: UserSumAggregateOutputType | null
@@ -1269,8 +1269,8 @@ export namespace Prisma {
       email: string
       password: string
       role: string
-      createdAt: Date | null
-      updatedAt: Date | null
+      createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2383,8 +2383,8 @@ export namespace Prisma {
     user_comments: JsonValue | null
     priority: string
     status: string
-    created_at: Date | null
-    updated_at: Date | null
+    created_at: Date
+    updated_at: Date
     user_name: string | null
     creator_name: string | null
     eta: Date | null
@@ -2508,8 +2508,8 @@ export namespace Prisma {
       user_comments: Prisma.JsonValue | null
       priority: string
       status: string
-      created_at: Date | null
-      updated_at: Date | null
+      created_at: Date
+      updated_at: Date
       user_name: string | null
       creator_name: string | null
       eta: Date | null
@@ -3435,14 +3435,6 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
-  export const NullsOrder: {
-    first: 'first',
-    last: 'last'
-  };
-
-  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
-
-
   export const JsonNullValueFilter: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull,
@@ -3450,6 +3442,14 @@ export namespace Prisma {
   };
 
   export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -3539,8 +3539,8 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
-    createdAt?: DateTimeNullableFilter<"User"> | Date | string | null
-    updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
     tasks_tasks_creator_idTousers?: TasksListRelationFilter
     tasks_tasks_user_idTousers?: TasksListRelationFilter
   }
@@ -3551,8 +3551,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    createdAt?: SortOrderInput | SortOrder
-    updatedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     tasks_tasks_creator_idTousers?: tasksOrderByRelationAggregateInput
     tasks_tasks_user_idTousers?: tasksOrderByRelationAggregateInput
   }
@@ -3566,8 +3566,8 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: StringFilter<"User"> | string
-    createdAt?: DateTimeNullableFilter<"User"> | Date | string | null
-    updatedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
     tasks_tasks_creator_idTousers?: TasksListRelationFilter
     tasks_tasks_user_idTousers?: TasksListRelationFilter
   }, "id" | "email">
@@ -3578,8 +3578,8 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     role?: SortOrder
-    createdAt?: SortOrderInput | SortOrder
-    updatedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -3596,8 +3596,8 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     role?: StringWithAggregatesFilter<"User"> | string
-    createdAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-    updatedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
   export type tasksWhereInput = {
@@ -3612,8 +3612,8 @@ export namespace Prisma {
     user_comments?: JsonNullableFilter<"tasks">
     priority?: StringFilter<"tasks"> | string
     status?: StringFilter<"tasks"> | string
-    created_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
-    updated_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
+    created_at?: DateTimeFilter<"tasks"> | Date | string
+    updated_at?: DateTimeFilter<"tasks"> | Date | string
     user_name?: StringNullableFilter<"tasks"> | string | null
     creator_name?: StringNullableFilter<"tasks"> | string | null
     eta?: DateTimeNullableFilter<"tasks"> | Date | string | null
@@ -3630,8 +3630,8 @@ export namespace Prisma {
     user_comments?: SortOrderInput | SortOrder
     priority?: SortOrder
     status?: SortOrder
-    created_at?: SortOrderInput | SortOrder
-    updated_at?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
     user_name?: SortOrderInput | SortOrder
     creator_name?: SortOrderInput | SortOrder
     eta?: SortOrderInput | SortOrder
@@ -3651,8 +3651,8 @@ export namespace Prisma {
     user_comments?: JsonNullableFilter<"tasks">
     priority?: StringFilter<"tasks"> | string
     status?: StringFilter<"tasks"> | string
-    created_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
-    updated_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
+    created_at?: DateTimeFilter<"tasks"> | Date | string
+    updated_at?: DateTimeFilter<"tasks"> | Date | string
     user_name?: StringNullableFilter<"tasks"> | string | null
     creator_name?: StringNullableFilter<"tasks"> | string | null
     eta?: DateTimeNullableFilter<"tasks"> | Date | string | null
@@ -3669,8 +3669,8 @@ export namespace Prisma {
     user_comments?: SortOrderInput | SortOrder
     priority?: SortOrder
     status?: SortOrder
-    created_at?: SortOrderInput | SortOrder
-    updated_at?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
     user_name?: SortOrderInput | SortOrder
     creator_name?: SortOrderInput | SortOrder
     eta?: SortOrderInput | SortOrder
@@ -3693,8 +3693,8 @@ export namespace Prisma {
     user_comments?: JsonNullableWithAggregatesFilter<"tasks">
     priority?: StringWithAggregatesFilter<"tasks"> | string
     status?: StringWithAggregatesFilter<"tasks"> | string
-    created_at?: DateTimeNullableWithAggregatesFilter<"tasks"> | Date | string | null
-    updated_at?: DateTimeNullableWithAggregatesFilter<"tasks"> | Date | string | null
+    created_at?: DateTimeWithAggregatesFilter<"tasks"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"tasks"> | Date | string
     user_name?: StringNullableWithAggregatesFilter<"tasks"> | string | null
     creator_name?: StringNullableWithAggregatesFilter<"tasks"> | string | null
     eta?: DateTimeNullableWithAggregatesFilter<"tasks"> | Date | string | null
@@ -3705,8 +3705,8 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     tasks_tasks_creator_idTousers?: tasksCreateNestedManyWithoutUsers_tasks_creator_idTousersInput
     tasks_tasks_user_idTousers?: tasksCreateNestedManyWithoutUsers_tasks_user_idTousersInput
   }
@@ -3717,8 +3717,8 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     tasks_tasks_creator_idTousers?: tasksUncheckedCreateNestedManyWithoutUsers_tasks_creator_idTousersInput
     tasks_tasks_user_idTousers?: tasksUncheckedCreateNestedManyWithoutUsers_tasks_user_idTousersInput
   }
@@ -3728,8 +3728,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks_tasks_creator_idTousers?: tasksUpdateManyWithoutUsers_tasks_creator_idTousersNestedInput
     tasks_tasks_user_idTousers?: tasksUpdateManyWithoutUsers_tasks_user_idTousersNestedInput
   }
@@ -3740,8 +3740,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks_tasks_creator_idTousers?: tasksUncheckedUpdateManyWithoutUsers_tasks_creator_idTousersNestedInput
     tasks_tasks_user_idTousers?: tasksUncheckedUpdateManyWithoutUsers_tasks_user_idTousersNestedInput
   }
@@ -3752,8 +3752,8 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -3761,8 +3761,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -3771,8 +3771,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type tasksCreateInput = {
@@ -3781,8 +3781,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: string
     status?: string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
     user_name?: string | null
     creator_name?: string | null
     eta?: Date | string | null
@@ -3799,8 +3799,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: string
     status?: string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
     user_name?: string | null
     creator_name?: string | null
     eta?: Date | string | null
@@ -3812,8 +3812,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_name?: NullableStringFieldUpdateOperationsInput | string | null
     creator_name?: NullableStringFieldUpdateOperationsInput | string | null
     eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3830,8 +3830,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_name?: NullableStringFieldUpdateOperationsInput | string | null
     creator_name?: NullableStringFieldUpdateOperationsInput | string | null
     eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3846,8 +3846,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: string
     status?: string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
     user_name?: string | null
     creator_name?: string | null
     eta?: Date | string | null
@@ -3859,8 +3859,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_name?: NullableStringFieldUpdateOperationsInput | string | null
     creator_name?: NullableStringFieldUpdateOperationsInput | string | null
     eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3875,8 +3875,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_name?: NullableStringFieldUpdateOperationsInput | string | null
     creator_name?: NullableStringFieldUpdateOperationsInput | string | null
     eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -3908,26 +3908,21 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type TasksListRelationFilter = {
     every?: tasksWhereInput
     some?: tasksWhereInput
     none?: tasksWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type tasksOrderByRelationAggregateInput = {
@@ -4006,18 +4001,18 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -4058,9 +4053,25 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type tasksCountOrderByAggregateInput = {
@@ -4165,6 +4176,20 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type tasksCreateNestedManyWithoutUsers_tasks_creator_idTousersInput = {
     create?: XOR<tasksCreateWithoutUsers_tasks_creator_idTousersInput, tasksUncheckedCreateWithoutUsers_tasks_creator_idTousersInput> | tasksCreateWithoutUsers_tasks_creator_idTousersInput[] | tasksUncheckedCreateWithoutUsers_tasks_creator_idTousersInput[]
     connectOrCreate?: tasksCreateOrConnectWithoutUsers_tasks_creator_idTousersInput | tasksCreateOrConnectWithoutUsers_tasks_creator_idTousersInput[]
@@ -4197,8 +4222,8 @@ export namespace Prisma {
     set?: string
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type tasksUpdateManyWithoutUsers_tasks_creator_idTousersNestedInput = {
@@ -4281,6 +4306,10 @@ export namespace Prisma {
     set?: string | null
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type UserUpdateOneRequiredWithoutTasks_tasks_creator_idTousersNestedInput = {
     create?: XOR<UserCreateWithoutTasks_tasks_creator_idTousersInput, UserUncheckedCreateWithoutTasks_tasks_creator_idTousersInput>
     connectOrCreate?: UserCreateOrConnectWithoutTasks_tasks_creator_idTousersInput
@@ -4322,15 +4351,15 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -4377,29 +4406,18 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -4414,6 +4432,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -4431,6 +4460,17 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
   export type NestedJsonNullableFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -4456,14 +4496,28 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type tasksCreateWithoutUsers_tasks_creator_idTousersInput = {
     task_name: string
     task_description?: string | null
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: string
     status?: string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
     user_name?: string | null
     creator_name?: string | null
     eta?: Date | string | null
@@ -4478,8 +4532,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: string
     status?: string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
     user_name?: string | null
     creator_name?: string | null
     eta?: Date | string | null
@@ -4501,8 +4555,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: string
     status?: string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
     user_name?: string | null
     creator_name?: string | null
     eta?: Date | string | null
@@ -4517,8 +4571,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: string
     status?: string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
     user_name?: string | null
     creator_name?: string | null
     eta?: Date | string | null
@@ -4562,8 +4616,8 @@ export namespace Prisma {
     user_comments?: JsonNullableFilter<"tasks">
     priority?: StringFilter<"tasks"> | string
     status?: StringFilter<"tasks"> | string
-    created_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
-    updated_at?: DateTimeNullableFilter<"tasks"> | Date | string | null
+    created_at?: DateTimeFilter<"tasks"> | Date | string
+    updated_at?: DateTimeFilter<"tasks"> | Date | string
     user_name?: StringNullableFilter<"tasks"> | string | null
     creator_name?: StringNullableFilter<"tasks"> | string | null
     eta?: DateTimeNullableFilter<"tasks"> | Date | string | null
@@ -4590,8 +4644,8 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     tasks_tasks_user_idTousers?: tasksCreateNestedManyWithoutUsers_tasks_user_idTousersInput
   }
 
@@ -4601,8 +4655,8 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     tasks_tasks_user_idTousers?: tasksUncheckedCreateNestedManyWithoutUsers_tasks_user_idTousersInput
   }
 
@@ -4616,8 +4670,8 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     tasks_tasks_creator_idTousers?: tasksCreateNestedManyWithoutUsers_tasks_creator_idTousersInput
   }
 
@@ -4627,8 +4681,8 @@ export namespace Prisma {
     email: string
     password: string
     role?: string
-    createdAt?: Date | string | null
-    updatedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     tasks_tasks_creator_idTousers?: tasksUncheckedCreateNestedManyWithoutUsers_tasks_creator_idTousersInput
   }
 
@@ -4653,8 +4707,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks_tasks_user_idTousers?: tasksUpdateManyWithoutUsers_tasks_user_idTousersNestedInput
   }
 
@@ -4664,8 +4718,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks_tasks_user_idTousers?: tasksUncheckedUpdateManyWithoutUsers_tasks_user_idTousersNestedInput
   }
 
@@ -4685,8 +4739,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks_tasks_creator_idTousers?: tasksUpdateManyWithoutUsers_tasks_creator_idTousersNestedInput
   }
 
@@ -4696,8 +4750,8 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: StringFieldUpdateOperationsInput | string
-    createdAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks_tasks_creator_idTousers?: tasksUncheckedUpdateManyWithoutUsers_tasks_creator_idTousersNestedInput
   }
 
@@ -4709,8 +4763,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: string
     status?: string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
     user_name?: string | null
     creator_name?: string | null
     eta?: Date | string | null
@@ -4724,8 +4778,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: string
     status?: string
-    created_at?: Date | string | null
-    updated_at?: Date | string | null
+    created_at?: Date | string
+    updated_at?: Date | string
     user_name?: string | null
     creator_name?: string | null
     eta?: Date | string | null
@@ -4737,8 +4791,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_name?: NullableStringFieldUpdateOperationsInput | string | null
     creator_name?: NullableStringFieldUpdateOperationsInput | string | null
     eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4753,8 +4807,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_name?: NullableStringFieldUpdateOperationsInput | string | null
     creator_name?: NullableStringFieldUpdateOperationsInput | string | null
     eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4768,8 +4822,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_name?: NullableStringFieldUpdateOperationsInput | string | null
     creator_name?: NullableStringFieldUpdateOperationsInput | string | null
     eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4781,8 +4835,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_name?: NullableStringFieldUpdateOperationsInput | string | null
     creator_name?: NullableStringFieldUpdateOperationsInput | string | null
     eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4797,8 +4851,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_name?: NullableStringFieldUpdateOperationsInput | string | null
     creator_name?: NullableStringFieldUpdateOperationsInput | string | null
     eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -4812,8 +4866,8 @@ export namespace Prisma {
     user_comments?: NullableJsonNullValueInput | InputJsonValue
     priority?: StringFieldUpdateOperationsInput | string
     status?: StringFieldUpdateOperationsInput | string
-    created_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    updated_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     user_name?: NullableStringFieldUpdateOperationsInput | string | null
     creator_name?: NullableStringFieldUpdateOperationsInput | string | null
     eta?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

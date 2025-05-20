@@ -13,7 +13,7 @@ export const CreateTask = async (req, res) => {
     const cId = parseInt(creator_id);
 
     // Check if both users exist in the database
-    const user = await prisma.user.findUnique({ where: { id: uId } });
+    const user = await prisma.User.findUnique({ where: { id: uId } });
     const creator = await prisma.user.findUnique({ where: { id: cId } });
     console.log(user,creator,"from server",user_id,creator_id)
 

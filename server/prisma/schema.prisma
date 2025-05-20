@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -19,7 +20,7 @@ model User {
   tasks_tasks_creator_idTousers tasks[] @relation("tasks_creator_idTousers")
   tasks_tasks_user_idTousers    tasks[] @relation("tasks_user_idTousers")
 
-  @@map("user")  // map to lowercase DB table "user"
+  @@map("users")  // <-- Optional: if your table is named 'users' in db
 }
 
 model tasks {
@@ -40,6 +41,5 @@ model tasks {
   users_tasks_creator_idTousers User @relation("tasks_creator_idTousers", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_creator")
   users_tasks_user_idTousers    User @relation("tasks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
 
-  @@map("tasks")  // map explicitly if table name is lowercase "tasks"
+  @@map("tasks")
 }
-
