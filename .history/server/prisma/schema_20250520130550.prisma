@@ -38,8 +38,8 @@ model tasks {
   creator_name     String?  @db.VarChar(100)
   eta              DateTime? @db.Timestamptz(6)
 
-  creator users @relation("tasks_creator_idTousers", fields: [creator_id], references: [id])
-  assignee users @relation("tasks_user_idTousers", fields: [user_id], references: [id])
+  creator user @relation("tasks_creator_idTousers", fields: [creator_id], references: [id])
+  assignee User @relation("tasks_user_idTousers", fields: [user_id], references: [id])
 
   @@map("tasks")
 }
