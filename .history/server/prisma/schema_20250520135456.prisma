@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model users {
   id        Int      @id @default(autoincrement())
   name      String   @db.VarChar(100)
   email     String   @unique @db.VarChar(255)
@@ -17,70 +17,28 @@ model user {
   createdAt DateTime @default(now()) @db.Timestamptz(6)
   updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(6)
 
-  tasks_created  tasks[] @relation("tasks_creator_idTousers")
+  tasks_created tasks[] @relation("tasks_creator_idTousers")
   tasks_assigned tasks[] @relation("tasks_user_idTousers")
 }
 
 model tasks {
-  id               Int       @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   user_id          Int
   creator_id       Int
-  task_name        String    @db.VarChar(100)
+  task_name        String   @db.VarChar(100)
   task_description String?
   user_comments    Json?
-  priority         String    @default("medium") @db.VarChar(10)
-  status           String    @default("draft") @db.VarChar(20)
-  created_at       DateTime  @default(now()) @db.Timestamptz(6)
-  updated_at       DateTime  @default(now()) @db.Timestamptz(6)
-  user_name        String?   @db.VarChar(100)
-  creator_name     String?   @db.VarChar(100)
+  priority         String   @default("medium") @db.VarChar(10)
+  status           String   @default("draft") @db.VarChar(20)
+  created_at       DateTime @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime @default(now()) @db.Timestamptz(6)
+  user_name        String?  @db.VarChar(100)
+  creator_name     String?  @db.VarChar(100)
   eta              DateTime? @db.Timestamptz(6)
 
-  creator  user @relation("tasks_creator_idTousers", fields: [creator_id], references: [id])
-  assignee user @relation("tasks_user_idTousers", fields: [user_id], references: [id])
+  creator users @relation("tasks_creator_idTousers", fields: [creator_id], references: [id])
+  assignee users @relation("tasks_user_idTousers", fields: [user_id], references: [id])
 }
-
-// generator client {
-//   provider = "prisma-client-js"
-//   output   = "../generated/prisma"
-// }
-
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
-
-// model users {
-//   id        Int      @id @default(autoincrement())
-//   name      String   @db.VarChar(100)
-//   email     String   @unique @db.VarChar(255)
-//   password  String   @db.VarChar(255)
-//   role      String   @default("user") @db.VarChar(20)
-//   createdAt DateTime @default(now()) @db.Timestamptz(6)
-//   updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(6)
-
-//   tasks_created tasks[] @relation("tasks_creator_idTousers")
-//   tasks_assigned tasks[] @relation("tasks_user_idTousers")
-// }
-
-// model tasks {
-//   id               Int      @id @default(autoincrement())
-//   user_id          Int
-//   creator_id       Int
-//   task_name        String   @db.VarChar(100)
-//   task_description String?
-//   user_comments    Json?
-//   priority         String   @default("medium") @db.VarChar(10)
-//   status           String   @default("draft") @db.VarChar(20)
-//   created_at       DateTime @default(now()) @db.Timestamptz(6)
-//   updated_at       DateTime @default(now()) @db.Timestamptz(6)
-//   user_name        String?  @db.VarChar(100)
-//   creator_name     String?  @db.VarChar(100)
-//   eta              DateTime? @db.Timestamptz(6)
-
-//   creator users @relation("tasks_creator_idTousers", fields: [creator_id], references: [id])
-//   assignee users @relation("tasks_user_idTousers", fields: [user_id], references: [id])
-// }
 
 // generator client {
 //   provider = "prisma-client-js"
@@ -123,6 +81,7 @@ model tasks {
 //   creator          User     @relation("CreatedTasks", fields: [creatorId], references: [id])
 //   assignee         User     @relation("AssignedTasks", fields: [userId], references: [id])
 // }
+
 
 // generator client {
 //   provider = "prisma-client-js"
@@ -194,6 +153,8 @@ model tasks {
 
 //   @@map("users")
 // }
+
+
 
 // model tasks {
 //   id          Int      @id @default(autoincrement())
