@@ -79,7 +79,7 @@ const Edittasks: React.FC = () => {
           <select
             value={priority}
             onChange={(e) => setPriority(e.target.value)}
-            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-indigo-300 hover:cursor-pointer"
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-indigo-300 "
           >
             <option className='hover:cursor-pointer' value="low">Low</option>
             <option className='hover:cursor-pointer' value="medium">Medium</option>

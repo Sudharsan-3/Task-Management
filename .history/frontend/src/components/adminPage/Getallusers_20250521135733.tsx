@@ -136,7 +136,7 @@ const Getallusers: React.FC = () => {
                   <td className="border px-4 py-2 text-center text-lg">
                     <button
                       onClick={() => handleShow(user)}
-                      className="text-purple-600 hover:text-purple-800 hover:cursor-pointer"
+                      className="text-purple-600 hover:text-purple-800"
                       title="Show"
                     >
                       <FaEye />

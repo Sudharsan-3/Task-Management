@@ -172,7 +172,7 @@ const Responsetask: React.FC = () => {
         <div className="text-right">
           <button
             onClick={handleSubmit}
-            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 hover:cursor-pointer"
+            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
           >
             Submit Response
           </button>

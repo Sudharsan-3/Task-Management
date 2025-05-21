@@ -25,7 +25,7 @@ const WelcomePage = () => {
         <p className="text-lg ">Manage your daily tasks efficiently and stay productive!</p>
         <button
           onClick={handleClick}
-          className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md transition-transform transform hover:scale-105 hover:bg-blue-600 hover:cursor-pointer"
+          className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md transition-transform transform hover:scale-105 hover:bg-blue-600"
         >
           🚀 Get Started
         </button>

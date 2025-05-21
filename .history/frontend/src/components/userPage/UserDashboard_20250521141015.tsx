@@ -37,7 +37,7 @@ const userData = storedUser ? JSON.parse(storedUser) : null;
 
             <button
               onClick={handleViewTasks}
-              className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg transition duration-200 hover:cursor-pointer"
+              className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-lg transition duration-200 "
             >
               View Tasks
             </button>

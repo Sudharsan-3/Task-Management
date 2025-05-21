@@ -120,14 +120,14 @@ const CreateTask: React.FC = () => {
         <div className="mb-4 text-center text-sm text-red-600">{message}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4 flex  flex-col">
+      <form onSubmit={handleSubmit} className="space-y-4 ">
         <div>
           <label className="block font-medium text-gray-700 mb-1">Select User</label>
           <select
             required
             value={selectedUserId}
             onChange={(e) => setSelectedUserId(e.target.value)}
-            className="w-full border rounded-md px-4 py-2 hover:cursor-pointer"
+            className="w-full border rounded-md px-4 py-2"
           >
             <option value="">-- Select User --</option>
             {users.map((user) => (
@@ -165,7 +165,7 @@ const CreateTask: React.FC = () => {
             <select
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
-              className="w-full border rounded-md px-4 py-2 hover:cursor-pointer"
+              className="w-full border rounded-md px-4 py-2"
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -178,7 +178,7 @@ const CreateTask: React.FC = () => {
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full border rounded-md px-4 py-2 hover:cursor-pointer"
+              className="w-full border rounded-md px-4 py-2"
             >
               <option value="draft">Draft</option>
               <option value="completed">Completed</option>

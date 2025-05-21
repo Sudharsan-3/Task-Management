@@ -1,0 +1,238 @@
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useContext,  } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import api from "../api/axios";
+import { AuthContext } from "./Context/AuthContext";
+
+type FormData = {
+  email: string;
+  password: string;
+};
+
+const Login = () => {
+  const navigate = useNavigate();
+  const { dispatch } = useContext(AuthContext);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const loginMutation = useMutation({
+    mutationFn: async (data: FormData) => {
+      return await api.post("/api/login", data);
+    },
+    onMutate: () => {
+      toast.loading("Logging in...", { toastId: "login" });
+    },
+    onSuccess: (response) => {
+      toast.dismiss("login");
+      const [userDetails, tokenObj] = response.data;
+      const { id, name, role, email } = userDetails;
+      const token = tokenObj.token;
+
+      if (name && role && token) {
+        const user = { id, name, role, email };
+
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("id", id);
+
+        dispatch({ type: "LOGIN", payload: user });
+        toast.success(`Welcome ${name}!`);
+
+        if (role === "admin") {
+          navigate("/adminpage");
+        } else if (role === "user") {
+          navigate("/userPage");
+        } else {
+          toast.error("Unknown role. Please contact support.");
+        }
+      } else {
+        toast.error("Invalid login response.");
+      }
+    },
+    onError: (error: any) => {
+      toast.dismiss("login");
+      const errorMsg = error?.response?.data || "Server error. Try again later.";
+      toast.error(errorMsg);
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    loginMutation.mutate(data);
+  };
+
+  return (
+    <section className="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-100 to-indigo-500 text-white">
+      <div className="w-full max-w-md bg-white text-gray-800 p-8 rounded-lg shadow-lg">
+        <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
+
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <label className="font-semibold">Enter E-mail</label>
+          <input
+            type="email"
+            {...register("email", { required: "Email is required" })}
+            className="p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+            placeholder="Enter your email"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
+
+          <label className="font-semibold">Enter Password</label>
+          <input
+            type="password"
+            {...register("password", { required: "Password is required" })}
+            className="p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+            placeholder="Enter your password"
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
+          )}
+
+          <div className="flex justify-between text-blue-500 text-sm mt-2">
+            <p className="hover:underline cursor-pointer">Forgot Password?</p>
+            <p
+              onClick={() => navigate("/Register")}
+              className="hover:underline cursor-pointer"
+            >
+              Create Account
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loginMutation.isLoading}
+            className="mt-4 bg-blue-500 text-white font-semibold py-2 rounded-md shadow-md transition-transform transform hover:scale-105 hover:bg-blue-600 disabled:opacity-50"
+          >
+            {loginMutation.isLoading ? "Logging in..." : "Submit"}
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+};
+
+export default Login;
+
+// import { useNavigate } from "react-router-dom";
+// import { useForm } from "react-hook-form";
+// import { useContext, useState } from "react";
+// import api from "../api/axios";
+// import { AuthContext } from "./Context/AuthContext";
+
+// type FormData = {
+//   email: string;
+//   password: string;
+// };
+
+// const Login = () => {
+//   const navigate = useNavigate();
+//   const [error, setError] = useState("");
+//   const { dispatch } = useContext(AuthContext);
+
+//   const {
+//     register,
+//     handleSubmit,
+//     formState: { errors },
+//   } = useForm<FormData>();
+
+//   const onSubmit = async (data: FormData) => {
+//     try {
+//       const response = await api.post("/api/login", data);
+//       const [userDetails, tokenObj] = response.data;
+//       const { id, name, role, email } = userDetails;
+//       const token = tokenObj.token;
+
+
+      
+//       if (name && role && token) {
+//         const user = { id, name, role, email };
+
+
+//         localStorage.setItem("token", token);
+//         localStorage.setItem("user", JSON.stringify(user));
+//         localStorage.setItem("id", id);
+
+//         dispatch({ type: "LOGIN", payload: user });
+
+//         if (role === "admin") {
+//           alert(`Logged in as Admin: ${name}`);
+//           navigate("/adminpage");
+//         } else if (role === "user") {
+//           alert(`Logged in as User: ${name}`);
+//           navigate("/userPage");
+//         } else {
+//           setError("Unknown role. Please contact support.");
+//         }
+//       } else {
+//         setError("Invalid login response.");
+//       }
+//     } catch (err: any) {
+//       console.error("Login error:", err);
+//       if (err.response?.data) {
+//         setError(err.response.data);
+//       } else {
+//         setError("Server error. Try again later.");
+//       }
+//     }
+//   };
+
+//   return (
+//     <section className="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-100 to-indigo-500 text-white">
+//       <div className="w-full max-w-md bg-white text-gray-800 p-8 rounded-lg shadow-lg">
+//         <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
+//         {error && <p className="text-red-500 text-center">{error}</p>}
+
+//         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+//           <label className="font-semibold">Enter E-mail</label>
+//           <input
+//             type="email"
+//             {...register("email", { required: "Email is required" })}
+//             className="p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+//             placeholder="Enter your email"
+//           />
+//           {errors.email && (
+//             <p className="text-red-500 text-sm">{errors.email.message}</p>
+//           )}
+
+//           <label className="font-semibold">Enter Password</label>
+//           <input
+//             type="password"
+//             {...register("password", { required: "Password is required" })}
+//             className="p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
+//             placeholder="Enter your password"
+//           />
+//           {errors.password && (
+//             <p className="text-red-500 text-sm">{errors.password.message}</p>
+//           )}
+
+//           <div className="flex justify-between text-blue-500 text-sm mt-2">
+//             <p className="hover:underline cursor-pointer">Forgot Password?</p>
+//             <p
+//               onClick={() => navigate("/Register")}
+//               className="hover:underline cursor-pointer"
+//             >
+//               Create Account
+//             </p>
+//           </div>
+
+//           <button
+//             type="submit"
+//             className="mt-4 bg-blue-500 text-white font-semibold py-2 rounded-md shadow-md transition-transform transform hover:scale-105 hover:bg-blue-600"
+//           >
+//             Submit
+//           </button>
+//         </form>
+//       </div>
+//     </section>
+//   );
+// };
+
+// export default Login;
+
+

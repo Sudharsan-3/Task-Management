@@ -105,7 +105,15 @@ const CreateTask: React.FC = () => {
   return (
     <div className="max-w-2xl mx-auto bg-white p-6 rounded-md shadow-md mt-6">
       <ToastContainer position="top-right" autoClose={3000} />
-      
+      <div className="flex items-start flex-col  mb-4">
+              <button
+                      onClick={() => navigate(-1)}
+                      className="flex items-center mb-4 text-blue-600 hover:underline"
+                    >
+                      <FaArrowLeft className="mr-2" />
+                    </button>
+              <h2 className="text-2xl font-bold text-right">All Users</h2>
+            </div>
 
       <button
         onClick={() => navigate(-1)}
@@ -120,14 +128,14 @@ const CreateTask: React.FC = () => {
         <div className="mb-4 text-center text-sm text-red-600">{message}</div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-4 flex  flex-col">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block font-medium text-gray-700 mb-1">Select User</label>
           <select
             required
             value={selectedUserId}
             onChange={(e) => setSelectedUserId(e.target.value)}
-            className="w-full border rounded-md px-4 py-2 hover:cursor-pointer"
+            className="w-full border rounded-md px-4 py-2"
           >
             <option value="">-- Select User --</option>
             {users.map((user) => (
@@ -165,7 +173,7 @@ const CreateTask: React.FC = () => {
             <select
               value={priority}
               onChange={(e) => setPriority(e.target.value)}
-              className="w-full border rounded-md px-4 py-2 hover:cursor-pointer"
+              className="w-full border rounded-md px-4 py-2"
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -178,7 +186,7 @@ const CreateTask: React.FC = () => {
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full border rounded-md px-4 py-2 hover:cursor-pointer"
+              className="w-full border rounded-md px-4 py-2"
             >
               <option value="draft">Draft</option>
               <option value="completed">Completed</option>
@@ -189,7 +197,7 @@ const CreateTask: React.FC = () => {
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 hover:cursor-pointer"
+          className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700"
         >
           {loading ? 'Creating...' : 'Create Task'}
         </button>

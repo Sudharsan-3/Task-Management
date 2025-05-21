@@ -127,7 +127,7 @@ const CreateTask: React.FC = () => {
             required
             value={selectedUserId}
             onChange={(e) => setSelectedUserId(e.target.value)}
-            className="w-full border rounded-md px-4 py-2 hover:cursor-pointer"
+            className="w-full border rounded-md px-4 py-2 "
           >
             <option value="">-- Select User --</option>
             {users.map((user) => (

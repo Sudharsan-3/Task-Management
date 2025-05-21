@@ -112,7 +112,7 @@ const LoadTasks: React.FC = () => {
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
           >
-            <option  value="all">All</option>
+            <option className='hover:cursor-pointer' value="all">All</option>
             <option value="draft">Draft</option>
             <option value="pending">Pending</option>
             <option value="completed">Completed</option>
@@ -185,21 +185,21 @@ const LoadTasks: React.FC = () => {
                   <td className="border px-4 py-2 text-center space-x-3 text-lg">
                     <button
                       onClick={() => handleShow(task)}
-                      className="text-purple-600 hover:text-purple-800 hover:cursor-pointer"
+                      className="text-purple-600 hover:text-purple-800"
                       title="Show"
                     >
                       <FaEye />
                     </button>
                     <button
                       onClick={() => handleUpdate(task)}
-                      className="text-yellow-600 hover:text-yellow-800 hover:cursor-pointer"
+                      className="text-yellow-600 hover:text-yellow-800"
                       title="Update"
                     >
                       <FaEdit />
                     </button>
                     <button
                       onClick={() => handleDelete(task.id)}
-                      className="text-red-600 hover:text-red-800 hover:cursor-pointer"
+                      className="text-red-600 hover:text-red-800"
                       title="Delete"
                     >
                       <FaTrash />
