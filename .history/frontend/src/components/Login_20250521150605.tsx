@@ -12,7 +12,6 @@ type FormData = {
 const Login = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const { dispatch } = useContext(AuthContext);
 
   const {
@@ -22,23 +21,33 @@ const Login = () => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    setLoading(true);
     try {
       const response = await api.post("/api/login", data);
       const [userDetails, tokenObj] = response.data;
       const { id, name, role, email } = userDetails;
       const token = tokenObj.token;
 
+
+      
       if (name && role && token) {
         const user = { id, name, role, email };
+
+
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("id", id);
 
         dispatch({ type: "LOGIN", payload: user });
 
-        alert(`Logged in as ${role === "admin" ? "Admin" : "User"}: ${name}`);
-        navigate(role === "admin" ? "/adminpage" : "/userPage");
+        if (role === "admin") {
+          alert(`Logged in as Admin: ${name}`);
+          navigate("/adminpage");
+        } else if (role === "user") {
+          alert(`Logged in as User: ${name}`);
+          navigate("/userPage");
+        } else {
+          setError("Unknown role. Please contact support.");
+        }
       } else {
         setError("Invalid login response.");
       }
@@ -49,8 +58,6 @@ const Login = () => {
       } else {
         setError("Server error. Try again later.");
       }
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -67,7 +74,6 @@ const Login = () => {
             {...register("email", { required: "Email is required" })}
             className="p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
             placeholder="Enter your email"
-            disabled={loading}
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -79,7 +85,6 @@ const Login = () => {
             {...register("password", { required: "Password is required" })}
             className="p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
             placeholder="Enter your password"
-            disabled={loading}
           />
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password.message}</p>
@@ -97,14 +102,9 @@ const Login = () => {
 
           <button
             type="submit"
-            disabled={loading}
-            className={`mt-4 font-semibold py-2 rounded-md shadow-md transition-transform transform ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-500 text-white hover:scale-105 hover:bg-blue-600"
-            }`}
+            className="mt-4 bg-blue-500 text-white font-semibold py-2 rounded-md shadow-md transition-transform transform hover:scale-105 hover:bg-blue-600"
           >
-            {loading ? "Logging in..." : "Submit"}
+            Submit
           </button>
         </form>
       </div>
@@ -114,21 +114,27 @@ const Login = () => {
 
 export default Login;
 
+
 // import { useNavigate } from "react-router-dom";
 // import { useForm } from "react-hook-form";
-// import { useContext, useState } from "react";
+// import { useContext, useState  } from "react";
 // import api from "../api/axios";
 // import { AuthContext } from "./Context/AuthContext";
+
 
 // type FormData = {
 //   email: string;
 //   password: string;
 // };
 
+
 // const Login = () => {
 //   const navigate = useNavigate();
 //   const [error, setError] = useState("");
+ 
 //   const { dispatch } = useContext(AuthContext);
+  
+  
 
 //   const {
 //     register,
@@ -137,42 +143,48 @@ export default Login;
 //   } = useForm<FormData>();
 
 //   const onSubmit = async (data: FormData) => {
+//     const { email, password } = data;
+
 //     try {
-//       const response = await api.post("/api/login", data);
-//       const [userDetails, tokenObj] = response.data;
-//       const { id, name, role, email } = userDetails;
+//       const response = await api.post("/api/login", { email, password });
+
+//       const [details, tokenObj] = response.data;
+//       const {id, name, role, email: userEmail } = details;
 //       const token = tokenObj.token;
+//        console.log(details)
 
-
-      
 //       if (name && role && token) {
-//         const user = { id, name, role, email };
-
-
+//         console.log("Login successful:", name, role, userEmail, token);
+//         setError("");
+      
+//  localStorage.setItem("id", id);
+//         // Store token and update auth context
 //         localStorage.setItem("token", token);
-//         localStorage.setItem("user", JSON.stringify(user));
-//         localStorage.setItem("id", id);
-
-//         dispatch({ type: "LOGIN", payload: user });
-
+//         dispatch({ type: "LOGIN", payload: token });
+       
+//         // Navigate after login
 //         if (role === "admin") {
-//           alert(`Logged in as Admin: ${name}`);
+//           localStorage.setItem("user", JSON.stringify({ id:id, name: name }));
+
+//           alert(`Login successful as Admin: ${name}`);
+          
 //           navigate("/adminpage");
 //         } else if (role === "user") {
-//           alert(`Logged in as User: ${name}`);
+//           alert(`Login successful as User: ${name}`);
+         
 //           navigate("/userPage");
 //         } else {
 //           setError("Unknown role. Please contact support.");
 //         }
 //       } else {
-//         setError("Invalid login response.");
+//         setError("Invalid login response. Please try again.");
 //       }
 //     } catch (err: any) {
 //       console.error("Login error:", err);
-//       if (err.response?.data) {
+//       if (err.response && err.response.data) {
 //         setError(err.response.data);
 //       } else {
-//         setError("Server error. Try again later.");
+//         setError("Server error. Please try again later.");
 //       }
 //     }
 //   };

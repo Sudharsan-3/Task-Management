@@ -86,7 +86,7 @@ const Admin = () => {
         Welcome, {user.user?.name}
       </h1>
 
-      {isSuccess && (
+      {isSuccess (
         <div>
           <h2 className="text-lg font-semibold mb-2">
             Total Users: {data.users.length}

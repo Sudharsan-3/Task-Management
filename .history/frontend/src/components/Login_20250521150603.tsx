@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useContext, useState } from "react";
+import { useContext, useEffect } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import api from "../api/axios";
 import { AuthContext } from "./Context/AuthContext";
 
@@ -11,8 +13,6 @@ type FormData = {
 
 const Login = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const { dispatch } = useContext(AuthContext);
 
   const {
@@ -21,44 +21,68 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = async (data: FormData) => {
-    setLoading(true);
-    try {
-      const response = await api.post("/api/login", data);
-      const [userDetails, tokenObj] = response.data;
+  const {
+    mutate: loginUser,
+    data,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useMutation({
+    mutationFn: async (formData: FormData) => {
+      return await api.post("/api/login", formData);
+    },
+  });
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.loading("Logging in...", { toastId: "login" });
+    }
+
+    if (isSuccess) {
+      toast.dismiss("login");
+      const [userDetails, tokenObj] = data.data;
       const { id, name, role, email } = userDetails;
       const token = tokenObj.token;
 
       if (name && role && token) {
         const user = { id, name, role, email };
+
         localStorage.setItem("token", token);
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("id", id);
 
         dispatch({ type: "LOGIN", payload: user });
+        toast.success(`Welcome ${name}!`);
 
-        alert(`Logged in as ${role === "admin" ? "Admin" : "User"}: ${name}`);
-        navigate(role === "admin" ? "/adminpage" : "/userPage");
+        if (role === "admin") {
+          navigate("/adminpage");
+        } else if (role === "user") {
+          navigate("/userPage");
+        } else {
+          toast.error("Unknown role. Please contact support.");
+        }
       } else {
-        setError("Invalid login response.");
+        toast.error("Invalid login response.");
       }
-    } catch (err: any) {
-      console.error("Login error:", err);
-      if (err.response?.data) {
-        setError(err.response.data);
-      } else {
-        setError("Server error. Try again later.");
-      }
-    } finally {
-      setLoading(false);
     }
+
+    if (isError) {
+      toast.dismiss("login");
+      const errorMessage =
+        error?.response?.data || "Server error. Please try again.";
+      toast.error(errorMessage);
+    }
+  }, [isLoading, isSuccess, isError, data, error, dispatch, navigate]);
+
+  const onSubmit = (formData: FormData) => {
+    loginUser(formData);
   };
 
   return (
     <section className="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-100 to-indigo-500 text-white">
       <div className="w-full max-w-md bg-white text-gray-800 p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold text-center mb-6">Login</h2>
-        {error && <p className="text-red-500 text-center">{error}</p>}
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <label className="font-semibold">Enter E-mail</label>
@@ -67,7 +91,6 @@ const Login = () => {
             {...register("email", { required: "Email is required" })}
             className="p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
             placeholder="Enter your email"
-            disabled={loading}
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -79,7 +102,6 @@ const Login = () => {
             {...register("password", { required: "Password is required" })}
             className="p-2 border border-gray-300 rounded-md focus:ring focus:ring-blue-300"
             placeholder="Enter your password"
-            disabled={loading}
           />
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password.message}</p>
@@ -97,14 +119,9 @@ const Login = () => {
 
           <button
             type="submit"
-            disabled={loading}
-            className={`mt-4 font-semibold py-2 rounded-md shadow-md transition-transform transform ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-500 text-white hover:scale-105 hover:bg-blue-600"
-            }`}
+            className="mt-4 bg-blue-500 text-white font-semibold py-2 rounded-md shadow-md transition-transform transform hover:scale-105 hover:bg-blue-600"
           >
-            {loading ? "Logging in..." : "Submit"}
+            Submit
           </button>
         </form>
       </div>
