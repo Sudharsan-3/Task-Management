@@ -120,7 +120,7 @@ const LoadTasks: React.FC = () => {
 
           <button
             onClick={() => navigate("/addTasks")}
-            className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded cursor-pointer"
+            className="bg-blue-600 hover:bg-blue- text-white font-bold py-2 px-4 rounded cursor-pointer"
             title="Add Task"
           >
             Create Tasks

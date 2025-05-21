@@ -109,7 +109,7 @@ const CreateTask: React.FC = () => {
 
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center mb-4 text-blue-600 hover:cursor-pointer"
+        className="flex items-center mb-4 text-blue-600 hover:cursor-"
       >
         <FaArrowLeft className="mr-2" />
       </button>
