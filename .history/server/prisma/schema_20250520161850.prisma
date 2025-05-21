@@ -1,0 +1,221 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(100)
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  role      String   @default("user") @db.VarChar(20)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+  tasks_created tasks[] @relation("tasks_creator_idTousers")
+  tasks_assigned tasks[] @relation("tasks_user_idTousers")
+}
+
+model tasks {
+  id               Int      @id @default(autoincrement())
+  user_id          Int
+  creator_id       Int
+  task_name        String   @db.VarChar(100)
+  task_description String?
+  user_comments    Json?
+  priority         String   @default("medium") @db.VarChar(10)
+  status           String   @default("draft") @db.VarChar(20)
+  created_at       DateTime @default(now()) @db.Timestamptz(6)
+  updated_at       DateTime @default(now()) @db.Timestamptz(6)
+  user_name        String?  @db.VarChar(100)
+  creator_name     String?  @db.VarChar(100)
+  eta              DateTime? @db.Timestamptz(6)
+
+  creator users @relation("tasks_creator_idTousers", fields: [creator_id], references: [id])
+  assignee users @relation("tasks_user_idTousers", fields: [user_id], references: [id])
+}
+
+
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "../generated/prisma"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// model users {
+//   id        Int      @id @default(autoincrement())
+//   name      String   @db.VarChar(100)
+//   email     String   @unique @db.VarChar(255)
+//   password  String   @db.VarChar(255)
+//   role      String   @default("user") @db.VarChar(20)
+//   createdAt DateTime @default(now()) @db.Timestamptz(6)
+//   updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+
+//   tasks_created tasks[] @relation("tasks_creator_idTousers")
+//   tasks_assigned tasks[] @relation("tasks_user_idTousers")
+// }
+
+// model tasks {
+//   id               Int      @id @default(autoincrement())
+//   user_id          Int
+//   creator_id       Int
+//   task_name        String   @db.VarChar(100)
+//   task_description String?
+//   user_comments    Json?
+//   priority         String   @default("medium") @db.VarChar(10)
+//   status           String   @default("draft") @db.VarChar(20)
+//   created_at       DateTime @default(now()) @db.Timestamptz(6)
+//   updated_at       DateTime @default(now()) @db.Timestamptz(6)
+//   user_name        String?  @db.VarChar(100)
+//   creator_name     String?  @db.VarChar(100)
+//   eta              DateTime? @db.Timestamptz(6)
+
+//   creator users @relation("tasks_creator_idTousers", fields: [creator_id], references: [id])
+//   assignee users @relation("tasks_user_idTousers", fields: [user_id], references: [id])
+// }
+
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "../generated/prisma"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// model User {
+//   id             Int      @id @default(autoincrement())
+//   name           String   @db.VarChar(100)
+//   email          String   @unique @db.VarChar(255)
+//   password       String   @db.VarChar(255)
+//   role           String   @default("user") @db.VarChar(20)
+//   createdAt      DateTime @default(now())
+//   updatedAt      DateTime @updatedAt
+
+//   tasksCreated   tasks[]  @relation("CreatedTasks")
+//   tasksAssigned  tasks[]  @relation("AssignedTasks")
+// }
+
+// model tasks {
+//   id               Int      @id @default(autoincrement())
+//   userId           Int
+//   creatorId        Int
+//   taskName         String   @db.VarChar(100)
+//   taskDescription  String?
+//   userComments     Json?
+//   priority         String   @default("medium") @db.VarChar(10)
+//   status           String   @default("draft") @db.VarChar(20)
+//   createdAt        DateTime @default(now())
+//   updatedAt        DateTime @updatedAt
+//   userName         String?  @db.VarChar(100)
+//   creatorName      String?  @db.VarChar(100)
+//   eta              DateTime?
+
+//   creator          User     @relation("CreatedTasks", fields: [creatorId], references: [id])
+//   assignee         User     @relation("AssignedTasks", fields: [userId], references: [id])
+// }
+
+
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "../generated/prisma"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// model User {
+//   id        Int      @id @default(autoincrement())
+//   name      String   @db.VarChar(100)
+//   email     String   @unique @db.VarChar(255)
+//   password  String   @db.VarChar(255)
+//   role      String   @default("user") @db.VarChar(20)
+//   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+//   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+//   tasks_created tasks[] @relation("tasks_creator_idTousers")
+//   tasks_assigned tasks[] @relation("tasks_user_idTousers")
+
+//   @@map("users")
+// }
+
+// model tasks {
+//   id               Int      @id @default(autoincrement())
+//   user_id          Int
+//   creator_id       Int
+//   task_name        String   @db.VarChar(100)
+//   task_description String?
+//   user_comments    Json?
+//   priority         String   @default("medium") @db.VarChar(10)
+//   status           String   @default("draft") @db.VarChar(20)
+//   created_at       DateTime @default(now()) @db.Timestamptz(6)
+//   updated_at       DateTime @default(now()) @db.Timestamptz(6)
+//   user_name        String?  @db.VarChar(100)
+//   creator_name     String?  @db.VarChar(100)
+//   eta              DateTime? @db.Timestamptz(6)
+
+//   creator User @relation("tasks_creator_idTousers", fields: [creator_id], references: [id])
+//   assignee User @relation("tasks_user_idTousers", fields: [user_id], references: [id])
+
+//   @@map("tasks")
+// }
+
+// generator client {
+//   provider = "prisma-client-js"
+//   output   = "../generated/prisma"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// model User {
+//   id        Int      @id @default(autoincrement())
+//   name      String   @db.VarChar(100)
+//   email     String   @unique @db.VarChar(255)
+//   password  String   @db.VarChar(255)
+//   role      String   @default("user") @db.VarChar(20)
+//   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+//   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+//   tasks_tasks_creator_idTousers tasks[] @relation("tasks_creator_idTousers")
+//   tasks_tasks_user_idTousers    tasks[] @relation("tasks_user_idTousers")
+
+//   @@map("users")
+// }
+
+
+
+// model tasks {
+//   id          Int      @id @default(autoincrement())
+//   user_id     Int
+//   creator_id  Int
+//   task_name   String   @db.VarChar(100)
+//   task_description String?
+//   user_comments Json?
+//   priority    String   @default("medium") @db.VarChar(10)
+//   status      String   @default("draft") @db.VarChar(20)
+//   created_at  DateTime @default(now()) @db.Timestamptz(6)
+//   updated_at  DateTime @default(now()) @db.Timestamptz(6)
+//   user_name   String?  @db.VarChar(100)
+//   creator_name String? @db.VarChar(100)
+//   eta         DateTime? @db.Timestamptz(6)
+
+//   users_tasks_creator_idTousers User @relation("tasks_creator_idTousers", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_creator")
+//   users_tasks_user_idTousers    User @relation("tasks_user_idTousers", fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_user")
+
+//   @@map("tasks")
+// }
