@@ -1,0 +1,14 @@
+import React from 'react'
+
+const Readdetails = () => {
+  return (
+    <div>
+
+      <h1>View task page</h1>
+    <p></p>
+
+    </div>
+  )
+}
+
+export default Readdetails
