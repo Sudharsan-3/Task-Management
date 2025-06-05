@@ -47,12 +47,6 @@ const Sidebar = ({
     ];
   }
 
-  const handleProfileClick = () => {
-    navigate("/profile");
-    if (isMobile) setIsSidebarOpen(false); // Close mobile sidebar
-    else setIsCollapsed(true); // Collapse desktop sidebar
-  };
-
   return (
     <>
       {isMobile && (
@@ -99,6 +93,7 @@ const Sidebar = ({
                 >
                   <span className={`${isCollapsed && !isMobile ? '' : 'mr-3'}`}>{item.icon}</span>
                   {(!isCollapsed || isMobile) && <span className="truncate">{item.name}</span>}
+
                 </Link>
               </li>
             ))}
@@ -108,15 +103,15 @@ const Sidebar = ({
         <div className="p-4 border-t border-gray-700">
           <div className={`flex items-center ${isCollapsed && !isMobile ? 'justify-center' : ''}`}>
             <div
-              onClick={handleProfileClick}
+              onClick={() => navigate("/profile")}
               className="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center hover:cursor-pointer"
             >
               <FaUserCircle className="text-2xl" />
             </div>
-            {(!isCollapsed || isMobile) && user && (
+            {!isCollapsed && !isMobile && user && (
               <div className="ml-3 overflow-hidden">
-                <p onClick={handleProfileClick} className="font-medium truncate hover:cursor-pointer">{user.name}</p>
-                <p onClick={handleProfileClick} className="text-xs text-gray-400 truncate hover:cursor-pointer">{user.email}</p>
+                <p onClick={() => navigate("/profile")} className="font-medium truncate hover:cursor-pointer">{user.name}</p>
+                <p onClick={() => navigate("/profile")} className="text-xs text-gray-400 truncate hover:cursor-pointer">{user.email}</p>
               </div>
             )}
           </div>
@@ -127,4 +122,3 @@ const Sidebar = ({
 };
 
 export default Sidebar;
-

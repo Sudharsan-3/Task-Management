@@ -252,16 +252,15 @@ const User = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={() => navigate("/reponsetask", { state: task.id })}
-                      t
-                      className="text-blue-600 hover:underline cursor-pointer"
+                      className="text-blue-600 hover:underline"
                     >
                       <Eye size={18} />
-                    
+                      Update
                     </button>
                     {task.eta && task.status.toLowerCase() !== "completed" && (
                       <button
                         onClick={() => handleMarkCompleted(task.id)}
-                        className="text-green-600 hover:underline cursor-pointer"
+                        className="text-green-600 hover:underline"
                       >
                          <CheckCircle size={18} />
                        

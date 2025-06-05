@@ -17,7 +17,7 @@ const WelcomePage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-center bg-gradient-to-r from-blue-400 to-indigo-400 text-white px-4">
+    <div className="flex flex-col min-h-screen items-center justify-center bg-gradient-to-r from-blue-400 to-indigo-600 text-white px-4">
       <div className="flex flex-col gap-6 bg-white text-gray-800 p-6 sm:p-8 rounded-lg shadow-lg text-center max-w-md w-full">
         <h1 className="text-2xl sm:text-3xl font-bold">Welcome to Daily Task ✅</h1>
         <p className="text-base sm:text-lg">

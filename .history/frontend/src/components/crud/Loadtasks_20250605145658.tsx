@@ -163,7 +163,7 @@ const LoadTasks: React.FC = () => {
 
         <div className="flex flex-wrap items-center gap-2">
           <select
-            className="border border-gray-300 text-sm p-2 rounded-md cursor-pointer"
+            className="border border-gray-300 text-sm p-2 rounded-md"
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
           >
@@ -175,7 +175,7 @@ const LoadTasks: React.FC = () => {
           </select>
 
           <select
-            className="border border-gray-300 text-sm p-2 rounded-md cursor-pointer"
+            className="border border-gray-300 text-sm p-2 rounded-md"
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
           >
@@ -196,7 +196,7 @@ const LoadTasks: React.FC = () => {
 
           <button
             onClick={() => navigate('/addTasks')}
-            className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded cursor-pointer"
+            className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded"
           >
             Create Tasks
           </button>
@@ -247,9 +247,9 @@ const LoadTasks: React.FC = () => {
                         </span>
                       </td>
                       <td className="border px-4 py-2 text-center space-x-3 text-lg">
-                        <button onClick={() => handleShow(task)} className="text-purple-600 hover:text-purple-800 cursor-pointer" title="Show"><FaEye /></button>
-                        <button onClick={() => handleUpdate(task)} className="text-yellow-600 hover:text-yellow-800 cursor-pointer" title="Update"><FaEdit /></button>
-                        <button onClick={() => handleDelete(task.id)} className="text-red-600 hover:text-red-800 cursor-pointer" title="Delete"><FaTrash /></button>
+                        <button onClick={() => handleShow(task)} className="text-purple-600 hover:text-purple-800" title="Show"><FaEye /></button>
+                        <button onClick={() => handleUpdate(task)} className="text-yellow-600 hover:text-yellow-800" title="Update"><FaEdit /></button>
+                        <button onClick={() => handleDelete(task.id)} className="text-red-600 hover:text-red-800" title="Delete"><FaTrash /></button>
                       </td>
                     </tr>
                   ))

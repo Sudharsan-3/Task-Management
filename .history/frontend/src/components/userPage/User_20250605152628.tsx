@@ -146,7 +146,7 @@ const User = () => {
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1 cursor-pointer"
+            className="border border-gray-300 rounded px-2 py-1"
           >
             <option value="all">All Status</option>
             <option value="draft">Draft</option>
@@ -157,7 +157,7 @@ const User = () => {
           <select
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1 cursor-pointer"
+            className="border border-gray-300 rounded px-2 py-1"
           >
             <option value="all">All Priority</option>
             <option value="low">Low</option>
@@ -246,25 +246,22 @@ const User = () => {
                 <td className="border px-3 py-2 capitalize">{task.creator_name}</td>
                 <td className="border px-3 py-2 capitalize">{task.priority}</td>
                 <td className="border px-3 py-2">{task.eta ? new Date(task.eta).toLocaleDateString() : "-"}</td>
-                <td className={`border px-3 py-2 font-semibold ${getStatusColor(task.status)}`}>{task.status}</td>
+                <td className={`px-2 py-1 rounded-full text-xs capitalize ${getStatusColor(task.status)}`}>{task.status}</td>
                 <td className="border px-3 py-2">{task.user_comments || "-"}</td>
                 <td className="border px-3 py-2">
                   <div className="flex gap-2">
                     <button
                       onClick={() => navigate("/reponsetask", { state: task.id })}
-                      t
-                      className="text-blue-600 hover:underline cursor-pointer"
+                      className="text-blue-600 hover:underline"
                     >
-                      <Eye size={18} />
-                    
+                      Update
                     </button>
                     {task.eta && task.status.toLowerCase() !== "completed" && (
                       <button
                         onClick={() => handleMarkCompleted(task.id)}
-                        className="text-green-600 hover:underline cursor-pointer"
+                        className="text-green-600 hover:underline"
                       >
-                         <CheckCircle size={18} />
-                       
+                        Complete
                       </button>
                     )}
                   </div>

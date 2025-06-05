@@ -252,7 +252,6 @@ const User = () => {
                   <div className="flex gap-2">
                     <button
                       onClick={() => navigate("/reponsetask", { state: task.id })}
-                      t
                       className="text-blue-600 hover:underline cursor-pointer"
                     >
                       <Eye size={18} />

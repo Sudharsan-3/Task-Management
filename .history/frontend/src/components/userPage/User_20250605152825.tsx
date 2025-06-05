@@ -121,6 +121,19 @@ const User = () => {
     }
   };
 
+  const getPriorityColor = (priority: string) => {
+    switch (priority?.toLowerCase()) {
+      case "high":
+        return "bg-red-500 text-white";
+      case "medium":
+        return "bg-yellow-500 text-white";
+      case "low":
+        return "bg-green-500 text-white";
+      default:
+        return "bg-gray-200 text-gray-600";
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white p-4 sm:p-6">
       <ToastContainer position="top-right" autoClose={3000} />
@@ -142,11 +155,11 @@ const User = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value.toLowerCase())}
         />
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-2">
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1 cursor-pointer"
+            className="border border-gray-300 rounded px-2 py-1"
           >
             <option value="all">All Status</option>
             <option value="draft">Draft</option>
@@ -157,7 +170,7 @@ const User = () => {
           <select
             value={filterPriority}
             onChange={(e) => setFilterPriority(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1 cursor-pointer"
+            className="border border-gray-300 rounded px-2 py-1"
           >
             <option value="all">All Priority</option>
             <option value="low">Low</option>
@@ -175,29 +188,40 @@ const User = () => {
         </div>
       </div>
 
-      {/* Responsive display */}
-      <div className="block lg:hidden">
-        {/* Card layout for small screens */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {filteredTasks.length > 0 ? (
-            filteredTasks.map((task) => (
-              <div key={task.id} className="border border-gray-300 rounded-lg p-4 shadow-md bg-white">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-xs font-medium text-gray-500">{task.ticket}</span>
-                  <span className={`text-xs font-semibold px-2 py-1 rounded-full ${getStatusColor(task.status)}`}>
+      {/* Table for large screens */}
+      <div className="hidden lg:block">
+        <table className="w-full table-auto border border-gray-300">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-3 py-2 text-left">Ticket</th>
+              <th className="px-3 py-2 text-left">Task Name</th>
+              <th className="px-3 py-2 text-left">Creator</th>
+              <th className="px-3 py-2 text-left">Priority</th>
+              <th className="px-3 py-2 text-left">ETA</th>
+              <th className="px-3 py-2 text-left">Status</th>
+              <th className="px-3 py-2 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredTasks.map((task) => (
+              <tr key={task.id} className="border-t border-gray-200">
+                <td className="px-3 py-2 text-sm">{task.ticket}</td>
+                <td className="px-3 py-2 text-sm">{task.task_name}</td>
+                <td className="px-3 py-2 text-sm capitalize">{task.creator_name}</td>
+                <td className="px-3 py-2">
+                  <span className={`text-xs font-medium px-2 py-1 rounded-full ${getPriorityColor(task.priority)}`}>
+                    {task.priority}
+                  </span>
+                </td>
+                <td className="px-3 py-2 text-sm">
+                  {task.eta ? new Date(task.eta).toLocaleDateString() : "N/A"}
+                </td>
+                <td className="px-3 py-2">
+                  <span className={`text-xs font-medium px-2 py-1 rounded-full ${getStatusColor(task.status)}`}>
                     {task.status}
                   </span>
-                </div>
-                <h2 className="text-lg font-semibold mb-1 text-gray-800">{task.task_name}</h2>
-                <p className="text-sm text-gray-600 mb-1">Creator: <span className="capitalize">{task.creator_name}</span></p>
-                <p className="text-sm text-gray-600 mb-1 capitalize">Priority: {task.priority}</p>
-                {task.eta && (
-                  <p className="text-sm text-gray-600 mb-1">ETA: {new Date(task.eta).toLocaleDateString()}</p>
-                )}
-                {task.user_comments && (
-                  <p className="text-sm text-gray-600 mb-2">Your Comments: <em>{task.user_comments}</em></p>
-                )}
-                <div className="flex gap-3 mt-3">
+                </td>
+                <td className="px-3 py-2 flex gap-3">
                   <button
                     onClick={() => navigate("/reponsetask", { state: task.id })}
                     className="flex items-center gap-1 text-blue-600 hover:underline"
@@ -214,67 +238,57 @@ const User = () => {
                       Complete
                     </button>
                   )}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-center text-gray-600 text-base sm:text-lg">No tasks found.</p>
-          )}
-        </div>
-      </div>
-
-      {/* Table layout for large screens */}
-      <div className="hidden lg:block overflow-x-auto">
-        <table className="min-w-full border border-gray-300 text-sm">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="border px-3 py-2 text-left">Ticket</th>
-              <th className="border px-3 py-2 text-left">Task Name</th>
-              <th className="border px-3 py-2 text-left">Creator</th>
-              <th className="border px-3 py-2 text-left">Priority</th>
-              <th className="border px-3 py-2 text-left">ETA</th>
-              <th className="border px-3 py-2 text-left">Status</th>
-              <th className="border px-3 py-2 text-left">Comments</th>
-              <th className="border px-3 py-2 text-left">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredTasks.map((task) => (
-              <tr key={task.id} className="hover:bg-gray-50">
-                <td className="border px-3 py-2">{task.ticket}</td>
-                <td className="border px-3 py-2">{task.task_name}</td>
-                <td className="border px-3 py-2 capitalize">{task.creator_name}</td>
-                <td className="border px-3 py-2 capitalize">{task.priority}</td>
-                <td className="border px-3 py-2">{task.eta ? new Date(task.eta).toLocaleDateString() : "-"}</td>
-                <td className={`border px-3 py-2 font-semibold ${getStatusColor(task.status)}`}>{task.status}</td>
-                <td className="border px-3 py-2">{task.user_comments || "-"}</td>
-                <td className="border px-3 py-2">
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => navigate("/reponsetask", { state: task.id })}
-                      t
-                      className="text-blue-600 hover:underline cursor-pointer"
-                    >
-                      <Eye size={18} />
-                    
-                    </button>
-                    {task.eta && task.status.toLowerCase() !== "completed" && (
-                      <button
-                        onClick={() => handleMarkCompleted(task.id)}
-                        className="text-green-600 hover:underline cursor-pointer"
-                      >
-                         <CheckCircle size={18} />
-                       
-                      </button>
-                    )}
-                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        {filteredTasks.length === 0 && (
-          <p className="text-center text-gray-600 py-4">No tasks found.</p>
+      </div>
+
+      {/* Card layout for small/medium screens */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:hidden">
+        {filteredTasks.length > 0 ? (
+          filteredTasks.map((task) => (
+            <div key={task.id} className="border border-gray-300 rounded-lg p-4 shadow-md bg-white hover:shadow-lg transition-all">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-xs font-medium text-gray-500">{task.ticket}</span>
+                <span className={`text-xs font-semibold px-2 py-1 rounded-full ${getStatusColor(task.status)}`}>
+                  {task.status}
+                </span>
+              </div>
+              <h2 className="text-lg font-semibold mb-1 text-gray-800">{task.task_name}</h2>
+              <p className="text-sm text-gray-600 mb-1">Creator: <span className="capitalize">{task.creator_name}</span></p>
+              <p className={`text-sm font-medium inline-block px-2 py-1 rounded-full mb-1 ${getPriorityColor(task.priority)}`}>
+                Priority: {task.priority}
+              </p>
+              {task.eta && (
+                <p className="text-sm text-gray-600 mb-1">ETA: {new Date(task.eta).toLocaleDateString()}</p>
+              )}
+              {task.user_comments && (
+                <p className="text-sm text-gray-600 mb-2">Your Comments: <em>{task.user_comments}</em></p>
+              )}
+              <div className="flex gap-3 mt-3">
+                <button
+                  onClick={() => navigate("/reponsetask", { state: task.id })}
+                  className="flex items-center gap-1 text-blue-600 hover:underline"
+                >
+                  <Eye size={18} />
+                  Update
+                </button>
+                {task.eta && task.status.toLowerCase() !== "completed" && (
+                  <button
+                    onClick={() => handleMarkCompleted(task.id)}
+                    className="flex items-center gap-1 text-green-600 hover:underline"
+                  >
+                    <CheckCircle size={18} />
+                    Complete
+                  </button>
+                )}
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="col-span-full text-center text-gray-600 text-base sm:text-lg">No tasks found.</p>
         )}
       </div>
     </div>
@@ -282,7 +296,3 @@ const User = () => {
 };
 
 export default User;
-
-
-
-

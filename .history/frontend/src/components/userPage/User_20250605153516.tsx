@@ -246,7 +246,7 @@ const User = () => {
                 <td className="border px-3 py-2 capitalize">{task.creator_name}</td>
                 <td className="border px-3 py-2 capitalize">{task.priority}</td>
                 <td className="border px-3 py-2">{task.eta ? new Date(task.eta).toLocaleDateString() : "-"}</td>
-                <td className={`border px-3 py-2 font-semibold ${getStatusColor(task.status)}`}>{task.status}</td>
+                <td className={`border h- px-3 py-2 font-semibold ${getStatusColor(task.status)}`}>{task.status}</td>
                 <td className="border px-3 py-2">{task.user_comments || "-"}</td>
                 <td className="border px-3 py-2">
                   <div className="flex gap-2">
