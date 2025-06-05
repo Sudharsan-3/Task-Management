@@ -40,7 +40,7 @@ const Layout = ({ children }: LayoutProps) => {
       {/* ✅ Backdrop for mobile when sidebar is open */}
       {isMobile && isSidebarOpen && (
   <div
-    className="fixed inset-0 bg-transparent z-30"
+    className="fixed inset-0 bg-black bg-opacity-20 backdrop-blur-sm z-30"
     onClick={() => setIsSidebarOpen(false)}
   ></div>
 )}
