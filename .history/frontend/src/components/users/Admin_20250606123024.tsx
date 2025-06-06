@@ -48,7 +48,7 @@ const Admin: React.FC = () => {
     refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
-    
+  console.log(data)
 
   useEffect(() => {
     if (isLoading) {
@@ -72,7 +72,7 @@ const Admin: React.FC = () => {
   const draft = allTasks.filter((t) => t.status?.toLowerCase() === 'draft').length;
   const pending = allTasks.filter((t) => t.status?.toLowerCase() === 'pending').length;
   const completed = allTasks.filter((t) => t.status?.toLowerCase() === 'completed').length;
-  const incompleted = allTasks.filter((t) => t.status?.toLowerCase() === 'incomplete').length;
+  const incompleted = allTasks.filter((t) => t.status?.toLowerCase() === 'incomplet').length;
 
   const activeUsers = users.filter((u) => u.mode === 'active').length;
   const inactiveUsers = users.filter((u) => u.mode === 'inactive').length;

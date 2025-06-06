@@ -1,10 +1,10 @@
 import { PrismaClient } from '@prisma/client';
-// import { PrismaClient } from "../generated/prisma/client.js";
+
 
 const prisma = new PrismaClient();
 
-export const EditTasks = async (req, res) => {
-  const { id, task_name, task_description, priority } = req.body;
+export const IncativeUser = async (req, res) => {
+  const { id, mode } = req.body;
 
   // Validate and parse task ID
   const t_id = parseInt(id);

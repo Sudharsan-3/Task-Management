@@ -22,17 +22,12 @@ export const loginController = async (req, res) => {
     const user = await prisma.user.findUnique({
       where: { email },
     });
-    console.log(user,"from bk login")
-   
+    if(user.mode ===)
 
     if (!user) {
       return res.status(404).send(`User not found with email: ${email}`);
     }
-  
-    if (user.mode === "inactive") {
-      return res.status(401).send(`Sorry, you cannot login. Admin has disabled your account: ${email}`);
-    }
-    
+
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).send("Invalid credentials");

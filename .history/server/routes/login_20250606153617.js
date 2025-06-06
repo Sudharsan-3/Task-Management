@@ -29,10 +29,9 @@ export const loginController = async (req, res) => {
       return res.status(404).send(`User not found with email: ${email}`);
     }
   
-    if (user.mode === "inactive") {
-      return res.status(401).send(`Sorry, you cannot login. Admin has disabled your account: ${email}`);
-    }
-    
+  if(user.mode === "incative"){
+    return res.status(404).send(`sorry you cannot login admin disabled you : ${email}`);
+  }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).send("Invalid credentials");

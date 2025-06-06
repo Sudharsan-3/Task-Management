@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { FaEye, FaArrowLeft, FaToggleOn, FaToggleOff } from 'react-icons/fa';
+import { FaEye, FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +12,6 @@ interface User {
   name: string;
   email: string;
   role: string;
-  mode: string;
 }
 
 const Getallusers: React.FC = () => {
@@ -22,6 +21,7 @@ const Getallusers: React.FC = () => {
 
   const [roleFilter, setRoleFilter] = useState<'all' | 'user' | 'admin'>('all');
 
+  // Set Authorization header globally
   useEffect(() => {
     if (token) {
       api.defaults.headers.common['Authorization'] = token;
@@ -32,14 +32,9 @@ const Getallusers: React.FC = () => {
     const res = await api.get('/api/allUsers');
     return res.data;
   };
+  console.log
 
-  const {
-    data,
-    isLoading,
-    isError,
-    isSuccess,
-    refetch,
-  } = useQuery({
+  const { data, isLoading, isError, isSuccess } = useQuery({
     queryKey: ['Getalluser'],
     queryFn: fetchData,
     refetchOnMount: true,
@@ -72,23 +67,6 @@ const Getallusers: React.FC = () => {
         autoClose: 3000,
       }
     );
-  };
-
-  const toggleUserMode = async (user: User) => {
-    const newMode = user.mode === 'active' ? 'inactive' : 'active';
-
-    try {
-      await api.put('/api/updatemode', {
-        id: user.id,
-        mode: newMode,
-      });
-
-      toast.success(`User ${user.name} is now ${newMode}`);
-      refetch();
-    } catch (error) {
-      console.error('Mode toggle failed:', error);
-      toast.error('Failed to update user mode');
-    }
   };
 
   const filteredUsers = data?.users?.filter((user: User) =>
@@ -131,7 +109,7 @@ const Getallusers: React.FC = () => {
         </div>
       </div>
 
-      {/* TABLE VIEW */}
+      {/* TABLE VIEW for md+ */}
       <div className="overflow-x-auto hidden md:block">
         <table className="min-w-full border border-gray-300 text-sm text-left">
           <thead>
@@ -152,32 +130,20 @@ const Getallusers: React.FC = () => {
                   <td className="border px-4 py-2">{user.name}</td>
                   <td className="border px-4 py-2">{user.email}</td>
                   <td className="border px-4 py-2 capitalize">{user.role}</td>
-                  <td className="border px-4 py-2 capitalize">{user.mode}</td>
-                  <td className="border px-4 py-2 text-center text-lg flex justify-center gap-4">
+                  <td className="border px-4 py-2 text-center text-lg">
                     <button
                       onClick={() => handleShow(user)}
-                      className="text-purple-600 hover:text-purple-800"
-                      title="Show User"
+                      className="text-purple-600 hover:text-purple-800 hover:cursor-pointer"
+                      title="Show"
                     >
                       <FaEye />
-                    </button>
-                    <button
-                      onClick={() => toggleUserMode(user)}
-                      className={`${
-                        user.mode === 'active'
-                          ? 'text-red-600 hover:text-red-800'
-                          : 'text-green-600 hover:text-green-800'
-                      }`}
-                      title={`Set as ${user.mode === 'active' ? 'Inactive' : 'Active'}`}
-                    >
-                      {user.mode === 'active' ? <FaToggleOff /> : <FaToggleOn />}
                     </button>
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="text-center text-gray-500 py-4">
+                <td colSpan={5} className="text-center text-gray-500 py-4">
                   No users found.
                 </td>
               </tr>
@@ -186,7 +152,7 @@ const Getallusers: React.FC = () => {
         </table>
       </div>
 
-      {/* MOBILE VIEW */}
+      {/* CARD VIEW for mobile */}
       <div className="flex flex-col gap-4 md:hidden">
         {filteredUsers && filteredUsers.length > 0 ? (
           filteredUsers.map((user: User, index: number) => (
@@ -204,20 +170,15 @@ const Getallusers: React.FC = () => {
                   <FaEye size={20} />
                 </button>
               </div>
-              <p><strong>Name:</strong> {user.name}</p>
-              <p><strong>Email:</strong> {user.email}</p>
-              <p className="capitalize"><strong>Role:</strong> {user.role}</p>
-              <p className="capitalize"><strong>Mode:</strong> {user.mode}</p>
-              <button
-                onClick={() => toggleUserMode(user)}
-                className={`mt-2 font-semibold ${
-                  user.mode === 'active'
-                    ? 'text-red-600 hover:text-red-800'
-                    : 'text-green-600 hover:text-green-800'
-                }`}
-              >
-                Set as {user.mode === 'active' ? 'Inactive' : 'Active'}
-              </button>
+              <p>
+                <strong>Name:</strong> {user.name}
+              </p>
+              <p>
+                <strong>Email:</strong> {user.email}
+              </p>
+              <p className="capitalize">
+                <strong>Role:</strong> {user.role}
+              </p>
             </div>
           ))
         ) : (

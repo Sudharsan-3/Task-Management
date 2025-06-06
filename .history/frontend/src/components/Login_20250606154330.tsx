@@ -57,10 +57,7 @@ const Login = () => {
         setError("Server error. Try again later.");
       }
     }
-     finally {
-      setLoading(false);
-    }
-  };
+    
 
   return (
     <section className="flex items-center justify-center min-h-screen bg-gradient-to-r from-gray-100 to-indigo-500 text-white">

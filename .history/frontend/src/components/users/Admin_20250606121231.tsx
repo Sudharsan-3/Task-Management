@@ -17,7 +17,6 @@ interface User {
   id: number;
   name: string;
   email: string;
-  mode: 'active' | 'inactive';
   tasks_tasks_user_idTousers: Task[];
   [key: string]: any;
 }
@@ -28,9 +27,9 @@ interface ResponseData {
 
 const COLORS = {
   draft: '#FBBF24',
-  pending: '#60A5FA',
+  pending: '#60A5FA', // blue-400
   completed: '#34D399',
-  incompleted: '#EF4444',
+  incompleted: '#34D399',
 };
 
 const Admin: React.FC = () => {
@@ -48,7 +47,6 @@ const Admin: React.FC = () => {
     refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
-    
 
   useEffect(() => {
     if (isLoading) {
@@ -68,14 +66,10 @@ const Admin: React.FC = () => {
 
   const allTasks: Task[] = users.flatMap((user) => user.tasks_tasks_user_idTousers || []);
   const totalTasks = allTasks.length;
-
-  const draft = allTasks.filter((t) => t.status?.toLowerCase() === 'draft').length;
-  const pending = allTasks.filter((t) => t.status?.toLowerCase() === 'pending').length;
-  const completed = allTasks.filter((t) => t.status?.toLowerCase() === 'completed').length;
-  const incompleted = allTasks.filter((t) => t.status?.toLowerCase() === 'incomplete').length;
-
-  const activeUsers = users.filter((u) => u.mode === 'active').length;
-  const inactiveUsers = users.filter((u) => u.mode === 'inactive').length;
+  const draft = allTasks.filter((t) => t.status === 'draft').length;
+  const pending = allTasks.filter((t) => t.status === 'pending').length;
+  const completed = allTasks.filter((t) => t.status === 'completed').length;
+  const incompleted = allTasks.filter((t) => t.status === 'incompleted').length;
 
   const getPercentage = (count: number): string => {
     return totalTasks > 0 ? ((count / totalTasks) * 100).toFixed(1) : '0';
@@ -90,18 +84,18 @@ const Admin: React.FC = () => {
     count: number;
     color: string;
   }) => (
-    <div className="flex flex-col items-center gap-1">
-      <div className="w-20 h-20">
+    <div className="flex flex-col items-center gap-2">
+      <div className="w-24 h-24">
         <ResponsiveContainer>
           <PieChart>
             <Pie
               data={[
                 { name: label, value: count },
-                { name: "Other", value: totalTasks - count },
+                { name: 'Other', value: totalTasks - count },
               ]}
               dataKey="value"
-              innerRadius={20}
-              outerRadius={30}
+              innerRadius={30}
+              outerRadius={40}
               startAngle={90}
               endAngle={-270}
             >
@@ -112,7 +106,7 @@ const Admin: React.FC = () => {
         </ResponsiveContainer>
       </div>
       <div className="text-center">
-        <p className="text-xs font-medium">{label}</p>
+        <p className="text-sm font-medium">{label}</p>
         <p className="text-xs text-gray-500">
           {count} / {totalTasks} ({getPercentage(count)}%)
         </p>
@@ -128,7 +122,6 @@ const Admin: React.FC = () => {
         className="flex items-center mb-4 text-blue-600 hover:underline"
       >
         <FaArrowLeft className="mr-2" />
-        Back
       </button>
 
       <h1 className="text-2xl font-bold mb-6">Welcome, {user?.name}</h1>
@@ -144,24 +137,14 @@ const Admin: React.FC = () => {
             <div className="text-5xl font-bold text-gray-800">{users.length}</div>
           </div>
 
-          {/* Card 2: User Modes */}
-          <div className="bg-white shadow-md rounded-2xl p-6 border border-gray-200 flex flex-col gap-2">
-            <h2 className="text-xl font-semibold text-gray-700 mb-1">User Mode Summary</h2>
-            <p className="text-sm text-gray-500">Active / Inactive Users</p>
-            <div className="flex justify-between text-lg font-semibold text-gray-700">
-              <span>Active: {activeUsers}</span>
-              <span>Inactive: {inactiveUsers}</span>
-            </div>
-          </div>
-
-          {/* Card 3: Task Overview */}
-          <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-200 col-span-2">
+          {/* Card 2: Task Details */}
+          <div className="bg-white shadow-xl rounded-2xl p-6 border border-gray-200">
             <h2 className="text-xl font-semibold mb-4 text-gray-800">Task Status Overview</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               <MiniPieChart label="Draft" count={draft} color={COLORS.draft} />
               <MiniPieChart label="Pending" count={pending} color={COLORS.pending} />
               <MiniPieChart label="Completed" count={completed} color={COLORS.completed} />
-              <MiniPieChart label="Incompleted" count={incompleted} color={COLORS.incompleted} />
+              <MiniPieChart label="Incompleted" count={notcompleted} color={COLORS.completed} />
             </div>
           </div>
         </div>

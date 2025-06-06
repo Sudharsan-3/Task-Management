@@ -17,7 +17,6 @@ import { Usergettask } from "./routes/Usergettask.js";
 import { UserCompleted } from "./routes/UserCompleted.js";
 import { Admin } from "./routes/Admin.js";
 import { Incomplete } from "./routes/Incomplete.js";
-import { InactiveUser } from "./routes/InactiveUser.js";
     
 
 dotenv.config()
@@ -89,7 +88,7 @@ app.use("/api/delete",verifyToken,DeleteTasks);
 app.use("/api/Admin",verifyToken,Admin)
 
 
-app.use("/api/updatemode",verifyToken,InactiveUser)
+app.use("/api/updatemode",verifyToken,Admin)
 
 
 

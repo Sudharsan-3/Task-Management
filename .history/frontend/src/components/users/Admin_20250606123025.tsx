@@ -48,7 +48,7 @@ const Admin: React.FC = () => {
     refetchOnMount: true,
     refetchOnWindowFocus: false,
   });
-    
+  console.log(data)
 
   useEffect(() => {
     if (isLoading) {

@@ -45,19 +45,11 @@ const Login = () => {
     } catch (err: any) {
       console.error("Login error:", err);
       if (err.response?.data) {
-        const errorMessage = err.response.data;
-    
-        // Show alert if user is inactive
-        if (typeof errorMessage === 'string' && errorMessage.toLowerCase().includes("disabled")) {
-          alert(errorMessage);
-        } else {
-          setError(errorMessage);
-        }
+        setError(err.response.data);
       } else {
         setError("Server error. Try again later.");
       }
-    }
-     finally {
+    } finally {
       setLoading(false);
     }
   };

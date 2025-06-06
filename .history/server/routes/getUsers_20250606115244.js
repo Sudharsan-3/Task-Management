@@ -8,8 +8,7 @@ export const GetUsers = async (req, res) => {
   try {
     const response = await prisma.user.findMany();
     const users = response
-
-    console.log(users)
+    
 
     if (users.length > 0) {
       return res.status(200).json({
