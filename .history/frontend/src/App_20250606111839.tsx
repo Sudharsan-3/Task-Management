@@ -30,15 +30,12 @@ import Responsetask from "./components/userPage/Responsetask";
 import Completed from "./components/userPage/Completed";
 import Readdetails from "./components/crud/Readdetails";
 
-//Auto log out by npm install jwt-decode
-
-import useTokenExpiryCheck from "./components/Context/useTokenExpiryCheck";
+//Auto log out 
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const { user } = useContext(AuthContext);
-  useTokenExpiryCheck();
 
   return (
     <Router>

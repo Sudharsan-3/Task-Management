@@ -38,7 +38,7 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const { user } = useContext(AuthContext);
-  useTokenExpiryCheck();
+  
 
   return (
     <Router>

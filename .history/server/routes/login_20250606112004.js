@@ -35,7 +35,7 @@ export const loginController = async (req, res) => {
     const token = jwt.sign(
       { id: user.id, name: user.name,email:user.email, role: user.role },
       secretKey,
-      { expiresIn: "24hr" }
+      { expiresIn: "60s" }
     );
 
     const { id,name, role  } = user;

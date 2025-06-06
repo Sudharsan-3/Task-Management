@@ -32,13 +32,11 @@ import Readdetails from "./components/crud/Readdetails";
 
 //Auto log out by npm install jwt-decode
 
-import useTokenExpiryCheck from "./components/Context/useTokenExpiryCheck";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   const { user } = useContext(AuthContext);
-  useTokenExpiryCheck();
 
   return (
     <Router>
